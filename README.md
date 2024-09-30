@@ -55,7 +55,7 @@ Join our community of developers creating universal apps.
    # Dependencias {
    
 - npm install bcryptjs
-
+- npm install firebase
   }
 
 
