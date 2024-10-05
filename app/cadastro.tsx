@@ -1,7 +1,7 @@
 import { Image, StatusBar, Text, TextInput, TouchableOpacity, View } from "react-native";
 import estilos from "./estilo";
 import { useState } from "react";
-import CadastrarAluno from "./db";
+import { CadastrarAluno } from "./db";
 
 export default function Cadastro() {
   const [matricula, setMatricula] = useState("");

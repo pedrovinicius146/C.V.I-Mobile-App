@@ -19,15 +19,15 @@ const database = getDatabase(app);
 
 // Função para gerar uma senha aleatória
 function gerarSenha(tamanho: number) {
-    const caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let senha = '';
-    
-    for (let i = 0; i < tamanho; i++) {
-        const indice = Math.floor(Math.random() * caracteres.length);
-        senha += caracteres[indice];
-    }
-    
-    return senha;
+  const caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let senha = '';
+  
+  for (let i = 0; i < tamanho; i++) {
+      const indice = Math.floor(Math.random() * caracteres.length);
+      senha += caracteres[indice];
+  }
+  
+  return senha;
 }
 
 // Função para validar e-mail
@@ -53,7 +53,7 @@ async function CadastrarAluno(matricula: string, nome: string, email: string) {
       return;
     }
 
-    // Gera a senha aleatória
+    // Gera a senha aleatória (para cadastro)
     const senhaGerada = gerarSenha(8);
 
     // Faz o hash da senha usando bcrypt
@@ -70,8 +70,41 @@ async function CadastrarAluno(matricula: string, nome: string, email: string) {
 
     alert('Cadastro realizado com sucesso');
   } catch (e) {
-    alert('Erro no Cadastro: ');
+    console.error('Erro no Cadastro:', e);
+    alert('Erro no Cadastro: ' + (typeof e === 'object' && e !== null && 'message' in e ? e.message : 'Ocorreu um erro inesperado.'));
   }
 }
 
-export default CadastrarAluno;
+async function autenticarAluno(matricula: string, senha: string) {
+  const referencia = ref(database);
+
+  try {
+    const snapshot = await get(child(referencia, `Alunos/${matricula}`));
+    
+    if (snapshot.exists()) {
+      const aluno = snapshot.val();
+      const senhaCorreta = aluno.senha;
+
+      // Comparação direta se a senha não estiver hashed
+      const senhaValida = senha.trim() === senhaCorreta.trim();
+
+      console.log('Senha correta do banco:', senhaCorreta);
+      console.log('Senha fornecida:', senha);
+      console.log('Senha válida:', senhaValida);
+
+      if (senhaValida) {
+        alert('Login realizado com sucesso!');
+        // Redirecionar ou outra ação após o login
+      } else {
+        alert('Senha incorreta.');
+      }
+    } else {
+      alert('Matrícula não encontrada.');
+    }
+  } catch (e) {
+    console.error('Erro ao tentar fazer login:', e);
+    alert('Erro ao tentar fazer login: ' + String(e));
+  }
+}
+
+export { CadastrarAluno, autenticarAluno };
