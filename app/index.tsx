@@ -54,6 +54,7 @@ export default function Index() {
           </View>
 
           <Link href='/cadastro'>ir para cadastro</Link>
+          <Link style={{color:'blue'}} href='/menu'>ir para o menu</Link>
         </View>
 
         <View><Text>Rodapé</Text></View>

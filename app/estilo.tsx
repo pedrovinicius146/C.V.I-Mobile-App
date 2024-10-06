@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { blue } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 const estilos=StyleSheet.create({
    body:{
@@ -42,7 +43,11 @@ const estilos=StyleSheet.create({
    },
    link_senha:{color:'blue'},
    botao:{
-    width:320,
+    width:300,
+    borderTopLeftRadius:10,
+    borderTopRightRadius:0,
+    borderBottomLeftRadius:0,
+    borderBottomRightRadius:15,
     paddingVertical:10,
     backgroundColor:'#075070',
    },
@@ -63,7 +68,7 @@ const estilos=StyleSheet.create({
     },
     texto_login:{
         fontSize:40,
-        fontWeight:'600',
+        fontWeight:'500',
         marginBottom:30
     },
     container_img:{
@@ -78,8 +83,71 @@ const estilos=StyleSheet.create({
         borderColor:'#78a6bd',
         borderRadius:100,
         marginTop:30
-    }
-
+    },
+    container_imagens:{     
+        flexDirection: 'row',      
+        justifyContent: 'space-between',       
+      },
+      
+      imagem_rodape: {
+        width: 140,  
+        height: 100, 
+      },
+      imagem_rodapewpp:{
+        width:80,  
+        height: 100, 
+        marginBottom:500
+        
+      },
+      logo: {
+        width: 100,
+        height: 100,
+      },
+      container_main__menu: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      texto_menu: {
+        fontSize: 24,
+        marginBottom: 20,
+      },
+      container_opcoes: {
+        marginBottom: 20,
+      },
+      botao_menu: {
+        backgroundColor: '#075070',
+        padding: 10,
+        marginVertical: 10,
+        borderRadius: 5,
+      },
+      container_menu_opcoes: {
+        width:340,
+        flexDirection: 'row',
+        flexWrap: 'wrap', 
+        justifyContent: 'space-between', 
+        marginVertical: 20,
+        marginTop:40
+      },
+      imageContainer: {
+        width: '38%', 
+        alignItems: 'center',
+        marginBottom: 10, 
+        borderWidth: 5,
+        borderRadius: 40,
+        borderColor:'#075070',
+        
+      },
+      image: {
+        width: 60,
+        height: 120, 
+        resizeMode: 'contain',
+      },
+      iconContainer: {
+        position: 'absolute',
+        top: 30,
+        left: 20,
+      },
+      
 
 })
 
