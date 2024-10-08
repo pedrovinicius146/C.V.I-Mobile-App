@@ -57,8 +57,24 @@ export default function Index() {
           <Link style={{color:'blue'}} href='/menu'>ir para o menu</Link>
         </View>
 
-        <View><Text>Rodapé</Text></View>
+        
+
+
+        <View style={estilos.container_rodape}>
+          <Link href='whatsapp://send?phone=+558199644185' style={estilos.iconContainer1}>
+            <Image style={estilos.imagemIconeWpp} source={require('../assets/images/wpplogo.png')} />
+          </Link>
+
+          <Link href='instagram://user?username=andrelbp_' style={estilos.iconContainer1}>
+            <Image style={estilos.imagemIconeInstagram} source={require('../assets/images/instalogo.png')} />
+          </Link>
+        </View>
+
+
+
       </View>
     </View>
-  );
+  
+
+);
 }
