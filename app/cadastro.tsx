@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CadastrarAluno } from "./db";
 
 export default function Cadastro() {
-  const [matricula, setMatricula] = useState("");
+
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
 
@@ -22,13 +22,6 @@ export default function Cadastro() {
           <View style={estilos.container_login}>
             <Text style={estilos.texto_login}>Cadastro</Text>
 
-            <TextInput
-              style={estilos.input_text}
-              placeholder="Digite a Matricula"
-              placeholderTextColor='#79a4b3'
-              value={matricula}
-              onChangeText={setMatricula}
-            />
 
             <TextInput
               style={estilos.input_text}
@@ -49,7 +42,7 @@ export default function Cadastro() {
             <TouchableOpacity 
               style={estilos.botao} 
               onPress={() => {
-                CadastrarAluno(matricula, nome, email);
+                CadastrarAluno(nome, email);
               }}>
               <Text style={estilos.texto_botao}>Cadastrar</Text>
             </TouchableOpacity>

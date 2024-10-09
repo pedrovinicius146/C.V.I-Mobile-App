@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import bcrypt from 'bcryptjs';  // Biblioteca para fazer hash da senha
+import { useRouter } from 'expo-router';
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -37,22 +38,18 @@ function validarEmail(email: string): boolean {
 }
 
 // Função para cadastrar o aluno
-async function CadastrarAluno(matricula: string, nome: string, email: string) {
+async function CadastrarAluno(nome: string, email: string) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
     return;
   }
 
   const referencia = ref(database);
-  
-  try {
-    // Verifica se a matrícula já existe
-    const snapshot = await get(child(referencia, `Alunos/${matricula}`));
-    if (snapshot.exists()) {
-      alert('Matrícula já cadastrada');
-      return;
-    }
 
+  // Substitui caracteres inválidos para criar um caminho seguro
+  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
+
+  try {
     // Gera a senha aleatória (para cadastro)
     const senhaGerada = gerarSenha(8);
 
@@ -61,32 +58,34 @@ async function CadastrarAluno(matricula: string, nome: string, email: string) {
     const hashedSenha = await bcrypt.hash(senhaGerada, saltRounds);
 
     // Cadastra o aluno no Firebase
-    await set(ref(database, 'Alunos/' + matricula), {
-      matricula: matricula,
+    await set(ref(database, `Alunos/${emailSeguro}`), {
       nome: nome,
       email: email,
       senha: hashedSenha // Armazena a senha já com o hash
     });
 
-    alert('Cadastro realizado com sucesso');
+    alert('Cadastro realizado com sucesso. Sua senha é: ' + senhaGerada);
   } catch (e) {
     console.error('Erro no Cadastro:', e);
     alert('Erro no Cadastro: ' + (typeof e === 'object' && e !== null && 'message' in e ? e.message : 'Ocorreu um erro inesperado.'));
   }
 }
 
-async function autenticarAluno(matricula: string, senha: string) {
+async function autenticarAluno(email: string, senha: string) {
   const referencia = ref(database);
-
+  
+  // Substituindo o @ por _ e . por - para criar um caminho válido
+  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
+  
   try {
-    const snapshot = await get(child(referencia, `Alunos/${matricula}`));
-    
+    const snapshot = await get(child(referencia, `Alunos/${emailSeguro}`));
+
     if (snapshot.exists()) {
       const aluno = snapshot.val();
-      const senhaCorreta = aluno.senha;
+      const senhaCorreta = aluno.senha; // Assegure-se que aqui é a senha hashada
 
-      // Comparação direta se a senha não estiver hashed
-      const senhaValida = senha.trim() === senhaCorreta.trim();
+      // Se as senhas estão hashadas, você deve comparar com uma função de hash
+      const senhaValida = senha.trim() === senhaCorreta.trim(); // Apenas um exemplo, use hash
 
       console.log('Senha correta do banco:', senhaCorreta);
       console.log('Senha fornecida:', senha);
@@ -99,7 +98,7 @@ async function autenticarAluno(matricula: string, senha: string) {
         alert('Senha incorreta.');
       }
     } else {
-      alert('Matrícula não encontrada.');
+      alert('Usuário não encontrado.');
     }
   } catch (e) {
     console.error('Erro ao tentar fazer login:', e);

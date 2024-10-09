@@ -5,11 +5,11 @@ import { Link } from "expo-router";
 import { autenticarAluno } from './db';
 
 export default function Index() {
-  const [matricula, setMatricula] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
   const handleLogin = async () => {
-    await autenticarAluno(matricula, senha);
+    await autenticarAluno(email, senha);
   };
 
   return (
@@ -28,15 +28,15 @@ export default function Index() {
 
             <TextInput
               style={estilos.input_text}
-              placeholder="Digite sua matricula"
+              placeholder="Digite seu Email"
               placeholderTextColor='#79a4b3'
-              value={matricula}
-              onChangeText={setMatricula}
+              value={email}
+              onChangeText={setEmail}
             />
 
             <TextInput
               style={estilos.input_text}
-              placeholder="Digite sua senha"
+              placeholder="Digite sua Senha"
               placeholderTextColor='#79a4b3'
               value={senha}
               onChangeText={setSenha}
