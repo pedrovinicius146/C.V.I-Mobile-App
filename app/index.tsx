@@ -3,13 +3,14 @@ import estilos from "./estilo";
 import { useState } from "react";
 import { Link } from "expo-router";
 import { autenticarAluno } from './db';
+import { useRouter } from "expo-router";
 
 export default function Index() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
+  const rota=useRouter();
   const handleLogin = async () => {
-    await autenticarAluno(email, senha);
+    await autenticarAluno(email, senha,rota);
   };
 
   return (

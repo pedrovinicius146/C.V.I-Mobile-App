@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import bcrypt from 'bcryptjs';  // Biblioteca para fazer hash da senha
-import { useRouter } from 'expo-router';
+
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -38,6 +38,7 @@ function validarEmail(email: string): boolean {
 }
 
 // Função para cadastrar o aluno
+
 async function CadastrarAluno(nome: string, email: string) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
@@ -63,15 +64,16 @@ async function CadastrarAluno(nome: string, email: string) {
       email: email,
       senha: hashedSenha // Armazena a senha já com o hash
     });
-
     alert('Cadastro realizado com sucesso. Sua senha é: ' + senhaGerada);
+   
+
   } catch (e) {
     console.error('Erro no Cadastro:', e);
     alert('Erro no Cadastro: ' + (typeof e === 'object' && e !== null && 'message' in e ? e.message : 'Ocorreu um erro inesperado.'));
   }
 }
 
-async function autenticarAluno(email: string, senha: string) {
+async function autenticarAluno(email: string, senha: string,rota:any) {
   const referencia = ref(database);
   
   // Substituindo o @ por _ e . por - para criar um caminho válido
@@ -92,7 +94,9 @@ async function autenticarAluno(email: string, senha: string) {
       console.log('Senha válida:', senhaValida);
 
       if (senhaValida) {
+      
         alert('Login realizado com sucesso!');
+        rota.push('/menu')
         // Redirecionar ou outra ação após o login
       } else {
         alert('Senha incorreta.');
