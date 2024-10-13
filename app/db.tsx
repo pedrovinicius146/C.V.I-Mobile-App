@@ -55,7 +55,7 @@ async function CadastrarAluno(nome: string, email: string) {
     const senhaGerada = gerarSenha(8);
 
     // Faz o hash da senha usando bcrypt
-    const saltRounds = 10;  // Número de rounds para gerar o salt
+    const saltRounds = 5;  // Número de rounds para gerar o salt
     const hashedSenha = await bcrypt.hash(senhaGerada, saltRounds);
 
     // Cadastra o aluno no Firebase
@@ -64,7 +64,7 @@ async function CadastrarAluno(nome: string, email: string) {
       email: email,
       senha: hashedSenha // Armazena a senha já com o hash
     });
-    alert('Cadastro realizado com sucesso. Sua senha é: ' + senhaGerada);
+    alert('Cadastro realizado com sucesso.');
    
 
   } catch (e) {
