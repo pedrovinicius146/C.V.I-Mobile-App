@@ -7,6 +7,7 @@ export default function Cadastro() {
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
   return (
     <View style={estilos.body}>
@@ -39,10 +40,19 @@ export default function Cadastro() {
               onChangeText={setEmail}
             />
 
-            <TouchableOpacity 
-              style={estilos.botao} 
+            <TextInput
+              style={estilos.input_text}
+              placeholder="Digite sua Senha"
+              placeholderTextColor='#79a4b3'
+              value={senha}
+              onChangeText={setSenha}
+              secureTextEntry // Para ocultar a senha digitada
+            />
+
+            <TouchableOpacity
+              style={estilos.botao}
               onPress={() => {
-                CadastrarAluno(nome, email);
+                CadastrarAluno(nome, email,senha);
               }}>
               <Text style={estilos.texto_botao}>Cadastrar</Text>
             </TouchableOpacity>

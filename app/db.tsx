@@ -39,7 +39,7 @@ function validarEmail(email: string): boolean {
 
 // Função para cadastrar o aluno
 
-async function CadastrarAluno(nome: string, email: string) {
+async function CadastrarAluno(nome: string, email: string,senha:string) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
     return;
@@ -51,20 +51,15 @@ async function CadastrarAluno(nome: string, email: string) {
   const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
 
   try {
-    // Gera a senha aleatória (para cadastro)
-    const senhaGerada = gerarSenha(8);
-
-    // Faz o hash da senha usando bcrypt
-    const saltRounds = 10;  // Número de rounds para gerar o salt
-    const hashedSenha = await bcrypt.hash(senhaGerada, saltRounds);
 
     // Cadastra o aluno no Firebase
     await set(ref(database, `Alunos/${emailSeguro}`), {
       nome: nome,
       email: email,
-      senha: hashedSenha // Armazena a senha já com o hash
+      autorizado:false,
+      senha: senha // Armazena a senha já com o hash
     });
-    alert('Cadastro realizado com sucesso. Sua senha é: ' + senhaGerada);
+    alert('Cadastro realizado com sucesso. Sua senha é: ' + senha);
    
 
   } catch (e) {
@@ -85,6 +80,7 @@ async function autenticarAluno(email: string, senha: string,rota:any) {
     if (snapshot.exists()) {
       const aluno = snapshot.val();
       const senhaCorreta = aluno.senha; // Assegure-se que aqui é a senha hashada
+      const autorizado=aluno.autorizado;
 
       // Se as senhas estão hashadas, você deve comparar com uma função de hash
       const senhaValida = senha.trim() === senhaCorreta.trim(); // Apenas um exemplo, use hash
@@ -95,8 +91,12 @@ async function autenticarAluno(email: string, senha: string,rota:any) {
 
       if (senhaValida) {
       
-        alert('Login realizado com sucesso!');
-        rota.push('/menu')
+        if (autorizado) {
+          rota.push('/menu')
+          alert('Login realizado com sucesso!');
+        }else{
+          alert('Login não autorizado')
+        }
         // Redirecionar ou outra ação após o login
       } else {
         alert('Senha incorreta.');
