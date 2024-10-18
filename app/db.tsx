@@ -59,7 +59,7 @@ async function CadastrarAluno(nome: string, email: string,senha:string) {
       autorizado:false,
       senha: senha // Armazena a senha já com o hash
     });
-    alert('Cadastro realizado com sucesso. Sua senha é: ' + senha);
+    alert('Cadastro realizado com sucesso.');
    
 
   } catch (e) {
