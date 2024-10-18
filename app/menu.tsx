@@ -27,7 +27,7 @@ export default function Menu() {
             <View style={estilos.imageContainer}>
               <TouchableOpacity>
                 <Image
-                  style={estilos.img}
+                  style={estilos.imagemenu}
                   source={require("../assets/images/futsallogo.png")}
                 />
               </TouchableOpacity>
@@ -35,7 +35,7 @@ export default function Menu() {
             <View style={estilos.imageContainer}>
               <TouchableOpacity>
                 <Image
-                  style={estilos.img}
+                  style={estilos.imagemenu}
                   source={require("../assets/images/balletlogo.png")}
                 />
               </TouchableOpacity>
@@ -43,7 +43,7 @@ export default function Menu() {
             <View style={estilos.imageContainer}>
               <TouchableOpacity>
                 <Image
-                  style={estilos.img}
+                  style={estilos.imagemenu}
                   source={require("../assets/images/voleilogo.png")}
                 />
               </TouchableOpacity>
@@ -51,7 +51,7 @@ export default function Menu() {
             <View style={estilos.imageContainer}>
               <TouchableOpacity>
                 <Image
-                  style={estilos.img}
+                  style={estilos.imagemenu}
                   source={require("../assets/images/basquetelogo.png")}
                 />
               </TouchableOpacity>
@@ -59,7 +59,7 @@ export default function Menu() {
             <View style={estilos.imageContainer}>
               <TouchableOpacity>
                 <Image
-                  style={estilos.img}
+                  style={estilos.imagemenu}
                   source={require("../assets/images/natacaologo.png")}
                 />
               </TouchableOpacity>
@@ -67,7 +67,7 @@ export default function Menu() {
             <View style={estilos.imageContainer}>
               <TouchableOpacity>
                 <Image
-                  style={estilos.img}
+                  style={estilos.imagemenu}
                   source={require("../assets/images/judologo.png")}
                 />
               </TouchableOpacity>
