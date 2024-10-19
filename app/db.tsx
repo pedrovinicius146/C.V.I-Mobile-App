@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get, child } from "firebase/database";
-import bcrypt from 'bcryptjs';  // Biblioteca para fazer hash da senha
-
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import { getDatabase, ref, set } from "firebase/database";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -16,97 +15,53 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const database = getDatabase(app);
 
-// Função para gerar uma senha aleatória
-function gerarSenha(tamanho: number) {
-  const caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let senha = '';
-  
-  for (let i = 0; i < tamanho; i++) {
-      const indice = Math.floor(Math.random() * caracteres.length);
-      senha += caracteres[indice];
-  }
-  
-  return senha;
-}
-
-// Função para validar e-mail
-function validarEmail(email: string): boolean {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
-}
-
 // Função para cadastrar o aluno
-
-async function CadastrarAluno(nome: string, email: string) {
-  if (!validarEmail(email)) {
-    alert('E-mail inválido');
-    return;
-  }
-
-  const referencia = ref(database);
-
-  // Substitui caracteres inválidos para criar um caminho seguro
-  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
-
+async function CadastrarAluno(nome: string, email: string, senha: string) {
   try {
-    // Gera a senha aleatória (para cadastro)
-    const senhaGerada = gerarSenha(8);
+    // Criar usuário no Firebase Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
 
-    // Faz o hash da senha usando bcrypt
-    const saltRounds = 5;  // Número de rounds para gerar o salt
-    const hashedSenha = await bcrypt.hash(senhaGerada, saltRounds);
+    // Atualizar o perfil do usuário para incluir o nome
+    await updateProfile(user, { displayName: nome });
 
-    // Cadastra o aluno no Firebase
+    // Enviar e-mail de verificação
+    await sendEmailVerification(user);
+    
+    // Armazenar informações adicionais no Realtime Database
+    const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-')); // Para garantir que o caminho é seguro
     await set(ref(database, `Alunos/${emailSeguro}`), {
       nome: nome,
       email: email,
-      senha: hashedSenha // Armazena a senha já com o hash
+      uid: user.uid, // Armazenando o uid para referência
     });
-    alert('Cadastro realizado com sucesso.');
-   
 
-  } catch (e) {
+    alert('Cadastro realizado com sucesso! Um e-mail de verificação foi enviado para você.');
+  } catch (e: any) {
     console.error('Erro no Cadastro:', e);
-    alert('Erro no Cadastro: ' + (typeof e === 'object' && e !== null && 'message' in e ? e.message : 'Ocorreu um erro inesperado.'));
+    alert('Erro no Cadastro: ' + (e.message || 'Ocorreu um erro inesperado.'));
   }
 }
 
-async function autenticarAluno(email: string, senha: string,rota:any) {
-  const referencia = ref(database);
-  
-  // Substituindo o @ por _ e . por - para criar um caminho válido
-  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
-  
+// Função para autenticar o aluno
+async function autenticarAluno(email: string, senha: string, rota: any) {
   try {
-    const snapshot = await get(child(referencia, `Alunos/${emailSeguro}`));
+    // Autenticar o usuário com email e senha
+    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
 
-    if (snapshot.exists()) {
-      const aluno = snapshot.val();
-      const senhaCorreta = aluno.senha; // Assegure-se que aqui é a senha hashada
-
-      // Se as senhas estão hashadas, você deve comparar com uma função de hash
-      const senhaValida = senha.trim() === senhaCorreta.trim(); // Apenas um exemplo, use hash
-
-      console.log('Senha correta do banco:', senhaCorreta);
-      console.log('Senha fornecida:', senha);
-      console.log('Senha válida:', senhaValida);
-
-      if (senhaValida) {
-      
-        alert('Login realizado com sucesso!');
-        rota.push('/menu')
-        // Redirecionar ou outra ação após o login
-      } else {
-        alert('Senha incorreta.');
-      }
+    if (user.emailVerified) {
+      alert('Login realizado com sucesso!');
+      rota.push('/menu'); // Redirecionar após login bem-sucedido
     } else {
-      alert('Usuário não encontrado.');
+      alert('Por favor, verifique seu e-mail antes de fazer login.');
     }
-  } catch (e) {
+  } catch (e: any) {
     console.error('Erro ao tentar fazer login:', e);
-    alert('Erro ao tentar fazer login: ' + String(e));
+    alert('Erro ao tentar fazer login: ' + (e.message || 'Ocorreu um erro inesperado.'));
   }
 }
 

@@ -4,9 +4,13 @@ import { useState } from "react";
 import { CadastrarAluno } from "./db";
 
 export default function Cadastro() {
-
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const handleCadastro = async () => {
+    await CadastrarAluno(nome, email, senha);
+  };
 
   return (
     <View style={estilos.body}>
@@ -21,7 +25,6 @@ export default function Cadastro() {
         <View style={estilos.container_main__login}>
           <View style={estilos.container_login}>
             <Text style={estilos.texto_login}>Cadastro</Text>
-
 
             <TextInput
               style={estilos.input_text}
@@ -39,14 +42,18 @@ export default function Cadastro() {
               onChangeText={setEmail}
             />
 
-            <TouchableOpacity 
-              style={estilos.botao} 
-              onPress={() => {
-                CadastrarAluno(nome, email);
-              }}>
+            <TextInput
+              style={estilos.input_text}
+              placeholder="Digite a Senha"
+              placeholderTextColor='#79a4b3'
+              value={senha}
+              onChangeText={setSenha}
+              secureTextEntry
+            />
+
+            <TouchableOpacity style={estilos.botao} onPress={handleCadastro}>
               <Text style={estilos.texto_botao}>Cadastrar</Text>
             </TouchableOpacity>
-
           </View>
         </View>
       </View>
