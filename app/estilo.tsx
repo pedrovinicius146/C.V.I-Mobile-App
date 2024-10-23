@@ -63,7 +63,7 @@ const estilos = StyleSheet.create({
       justifyContent: 'center',
    },
    container_login: {
-      marginTop: 40,
+      marginTop: 50,
       width: 400,
       alignItems: 'center'
    },
@@ -73,6 +73,8 @@ const estilos = StyleSheet.create({
       marginBottom: 30
    },
    container_img: {
+      marginTop:20,
+      marginBottom:40,
       justifyContent: 'center',
       alignItems: 'center',
    },
@@ -83,7 +85,8 @@ const estilos = StyleSheet.create({
       borderWidth: 3,
       borderColor: '#78a6bd',
       borderRadius: 100,
-      marginTop: 30
+      marginTop: 50,
+
    },
    container_imagens: {
       flexDirection: 'row',
@@ -149,10 +152,6 @@ const estilos = StyleSheet.create({
       height: 90,
       resizeMode: 'contain',
    },
-   link: {
-      color: 'blue', 
-      textAlign: 'center', 
-      },
       container_rodape: {
          flexDirection: 'row',
          justifyContent: 'center',
@@ -178,26 +177,47 @@ const estilos = StyleSheet.create({
      resizeMode:'contain',
   },
 
- containerOpcoes: {
+  containerOpcoes: {
    borderTopColor: '#ddd',
    borderTopWidth: 1,
    paddingVertical: 20,
-   width:'85%',
+   width: '90%',  
+   marginHorizontal: '5%', 
+   backgroundColor: '#fff', 
+   borderRadius: 10,  
  },
+
  linhaOpcoes: {
    flexDirection: 'row',
    alignItems: 'center',
-   borderBottomColor: '#075070',
-   borderRadius:5,
+   borderBottomColor: '#ddd',
    borderBottomWidth: 1,
-   paddingVertical: 20,
- },
+   paddingVertical: 15,
+   borderRadius: 8,  
+   backgroundColor: '#f9f9f9',  
+   marginBottom: 10,
+   shadowColor: "#000",
+   shadowOffset: { width: 0, height: 1 },
+   shadowOpacity: 0.1,
+   shadowRadius: 3,
+   elevation: 2,
+},
+
  cabecalho_Adm: {
-   backgroundColor: '#075070',
-   paddingVertical: 20,
-   borderRadius:5,
- },
- colunaTitulo: {
+   backgroundColor: '#075070', 
+   paddingVertical: 25,
+   paddingHorizontal: 15,
+   borderTopLeftRadius: 10,
+   borderTopRightRadius: 10,
+   borderBottomWidth: 0,
+   shadowColor: "#000",
+   shadowOffset: { width: 0, height: 3 },
+   shadowOpacity: 0.1,
+   shadowRadius: 5,
+   elevation: 5,
+},
+
+colunaTitulo: {
    flex: 1,
    fontSize: 16,
    color: '#333',
@@ -213,20 +233,24 @@ const estilos = StyleSheet.create({
  headerCell: {
    fontWeight: 'bold',
    textAlign: 'left',
-   fontSize: 20,
+   fontSize: 22,  
+   color: '#fff', 
  },
  botoesmenu: {
    color: '#075070',
+   fontWeight: 'bold',
  },
- botaoMenu: {
+botaoMenu: {
    backgroundColor: '#e8f1f5',
-   padding: 10,
-   borderRadius: 5,
-   marginHorizontal: 5,
- },
+   padding: 12,
+   borderRadius: 8,
+   marginHorizontal: 6.3,
+   shadowColor: "#000", 
+   shadowOffset: { width: 0, height: 2 },
+   shadowOpacity: 0.2,
+   shadowRadius: 5,
+   elevation: 3,
+},
 
- 
- 
 });
-
 export default estilos;

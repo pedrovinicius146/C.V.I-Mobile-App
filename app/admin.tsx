@@ -8,7 +8,7 @@ export default function AdminScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#075070" />
       <View style={estilos.top}>
         <View style={estilos.container_img}>
-          <Image style={estilos.img} source={require('../assets/images/Cvi.png')} />
+        <Image style={estilos.img} source={require('../assets/images/Cvi.png')} />
         </View>
       </View>
 
@@ -20,10 +20,9 @@ export default function AdminScreen() {
 
               <View style={estilos.containerOpcoes}>
                 <View style={[estilos.linhaOpcoes, estilos.cabecalho_Adm]}>
-                  <Text style={[estilos.colunaTitulo, estilos.headerCell]}>Opção</Text>
-                  <Text style={[estilos.colunaAcoes, estilos.headerCell]}>Ação</Text>
                 </View>
 
+                {/*
                 <View style={estilos.linhaOpcoes}>
                   <Text style={estilos.colunaTitulo}>Disciplinas</Text>
                   <View style={estilos.colunaAcoes}>
@@ -38,6 +37,7 @@ export default function AdminScreen() {
                     </TouchableOpacity>
                   </View>
                 </View>
+                */}
 
                 <View style={estilos.linhaOpcoes}>
                   <Text style={estilos.colunaTitulo}>Eventos</Text>

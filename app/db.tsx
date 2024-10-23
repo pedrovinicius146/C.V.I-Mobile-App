@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 import bcrypt from 'bcryptjs';  // Biblioteca para fazer hash da senha
-
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -16,6 +16,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const database = getDatabase(app);
 
 // Função para gerar uma senha aleatória
@@ -37,76 +38,74 @@ function validarEmail(email: string): boolean {
   return regex.test(email);
 }
 
-// Função para cadastrar o aluno
-
-async function CadastrarAluno(nome: string, email: string,senha:string) {
+// Função para cadastrar o aluno no Firebase Authentication e no Realtime Database
+async function CadastrarAluno(nome: string, email: string, senha: string) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
     return;
   }
 
-  const referencia = ref(database);
-
-  // Substitui caracteres inválidos para criar um caminho seguro
-  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
-
   try {
+    // Criar usuário no Firebase Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
 
-    // Cadastra o aluno no Firebase
+    // Atualizar o perfil do usuário com o nome
+    await updateProfile(user, { displayName: nome });
+
+    // Enviar e-mail de verificação
+    await sendEmailVerification(user);
+    
+    // Armazenar dados adicionais no Realtime Database
+    const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-')); // Para criar um caminho válido
     await set(ref(database, `Alunos/${emailSeguro}`), {
       nome: nome,
       email: email,
-      autorizado:false,
-      senha: senha // Armazena a senha já com o hash
+      autorizado: false,
+      uid: user.uid, // Armazenar o UID gerado pelo Authentication
+      senha: senha // Armazenar a senha em texto simples ou hashada
     });
-    alert('Cadastro realizado com sucesso.');
-   
 
-  } catch (e) {
+    alert('Cadastro realizado com sucesso! Um e-mail de verificação foi enviado para você.');
+  } catch (e: any) {
     console.error('Erro no Cadastro:', e);
-    alert('Erro no Cadastro: ' + (typeof e === 'object' && e !== null && 'message' in e ? e.message : 'Ocorreu um erro inesperado.'));
+    alert('Erro no Cadastro: ' + (e.message || 'Ocorreu um erro inesperado.'));
   }
 }
 
-async function autenticarAluno(email: string, senha: string,rota:any) {
-  const referencia = ref(database);
-  
-  // Substituindo o @ por _ e . por - para criar um caminho válido
-  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
-  
+// Função para autenticar o aluno com Firebase Authentication e verificar no Realtime Database
+async function autenticarAluno(email: string, senha: string, rota: any) {
   try {
+    // Autenticar o usuário com Firebase Authentication
+    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
+
+    if (!user.emailVerified) {
+      alert('Por favor, verifique seu e-mail antes de fazer login.');
+      return;
+    }
+
+    // Verificar autorização no Realtime Database
+    const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
+    const referencia = ref(database);
     const snapshot = await get(child(referencia, `Alunos/${emailSeguro}`));
 
     if (snapshot.exists()) {
       const aluno = snapshot.val();
-      const senhaCorreta = aluno.senha; // Assegure-se que aqui é a senha hashada
-      const autorizado=aluno.autorizado;
+      const autorizado = aluno.autorizado;
 
-      // Se as senhas estão hashadas, você deve comparar com uma função de hash
-      const senhaValida = senha.trim() === senhaCorreta.trim(); // Apenas um exemplo, use hash
-
-      console.log('Senha correta do banco:', senhaCorreta);
-      console.log('Senha fornecida:', senha);
-      console.log('Senha válida:', senhaValida);
-
-      if (senhaValida) {
-      
-        if (autorizado) {
-          rota.push('/menu')
-          alert('Login realizado com sucesso!');
-        }else{
-          alert('Login não autorizado')
-        }
-        // Redirecionar ou outra ação após o login
+      if (autorizado) {
+        alert('Login realizado com sucesso!');
+        rota.push('/menu');
       } else {
-        alert('Senha incorreta.');
+        alert('Login não autorizado. Por favor, aguarde a autorização.');
       }
     } else {
-      alert('Usuário não encontrado.');
+      alert('Usuário não encontrado no banco de dados.');
     }
-  } catch (e) {
+  } catch (e: any) {
     console.error('Erro ao tentar fazer login:', e);
-    alert('Erro ao tentar fazer login: ' + String(e));
+    alert('Erro ao tentar fazer login: ' + (e.message || 'Ocorreu um erro inesperado.'));
   }
 }
 
