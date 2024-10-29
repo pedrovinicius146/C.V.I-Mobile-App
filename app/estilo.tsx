@@ -165,12 +165,6 @@ const estilos = StyleSheet.create({
       alignItems: 'center',
       padding: 15,
    },
-   imagemIconeWpp: {
-      width: 40,
-      height: 40,
-      resizeMode:'contain',
-     
-  },
   imagemIconeInstagram: {
       width: 40,
       height: 40,
@@ -178,7 +172,7 @@ const estilos = StyleSheet.create({
   },
 
   containerOpcoes: {
-   borderTopColor: '#ddd',
+   borderTopColor: '#fff',
    borderTopWidth: 1,
    paddingVertical: 20,
    width: '90%',  
@@ -192,7 +186,7 @@ const estilos = StyleSheet.create({
    alignItems: 'center',
    borderBottomColor: '#ddd',
    borderBottomWidth: 1,
-   paddingVertical: 15,
+   paddingVertical: 12,
    borderRadius: 8,  
    backgroundColor: '#f9f9f9',  
    marginBottom: 10,
@@ -223,24 +217,32 @@ colunaTitulo: {
    color: '#333',
    textAlign: 'left',
    paddingHorizontal: 5,
+   backgroundColor: '#ddd',
+   borderRadius:10,
+   padding: 12,
+   marginHorizontal: 6.3,
+   width:10
+   
  },
  colunaAcoes: {
    flexDirection: 'row',
-   justifyContent: 'space-around',
-   paddingHorizontal: 5,
+   justifyContent: 'flex-start', 
+   //PaddingHorizontal
+   marginHorizontal: 10, 
+   borderRadius: 8,
+},
 
- },
  headerCell: {
    fontWeight: 'bold',
    textAlign: 'left',
    fontSize: 22,  
    color: '#fff', 
  },
- botoesmenu: {
+ botoesadmin: {
    color: '#075070',
    fontWeight: 'bold',
  },
-botaoMenu: {
+botaoAdmin: {
    backgroundColor: '#e8f1f5',
    padding: 12,
    borderRadius: 8,
@@ -251,6 +253,90 @@ botaoMenu: {
    shadowRadius: 5,
    elevation: 3,
 },
-
+professor: {
+   fontSize: 16,
+   color: '#333',
+ },
+ containerEvento: {
+   marginVertical: 20,
+   alignItems: 'center',
+ },
+ tituloEvento: {
+   fontSize: 20,
+   fontWeight: 'bold',
+   color: '#075070',
+ },
+ caixaEvento: {
+   width: '100%',
+   backgroundColor: '#E0E0E0',
+   borderRadius: 10,
+   padding: 20,
+   marginTop: 10,
+ },
+ textoEvento: {
+   fontSize: 16,
+   color: '#333',
+ },
+ container_Calendario: {
+   alignItems:'center',
+ },
+ calendarioTitulo: {
+   fontSize: 20,
+   fontWeight: 'bold',
+   color: '#075070',
+ },
+ calendarioGrid: {
+   flexDirection: 'column',
+   alignItems: 'center',
+   justifyContent:'center',
+   marginTop: 10,
+   width:'100%',
+ },
+ imagemIconemenu2: {
+   width: 50,
+   height: 60,
+   resizeMode:'contain',
+  
+ },
+ secaoSuperior: {
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   alignItems: 'center',
+   padding: 5,
+   width: '100%',
+   marginBottom: 20,  
+ },
+ containermenu2: {
+   flexDirection: 'row',
+   alignItems: 'center',
+ },
+ scrollCalendario: {
+   height: 250,  
+   width: '100%',
+   marginTop: 10,
+ },
+ horarioContainer: {
+   backgroundColor: '#E0E0E0',
+   borderRadius: 10,
+   padding: 15,
+   marginVertical: 10,
+   alignItems: 'center',
+   justifyContent: 'center',
+   width:350,
+   alignSelf: 'center',
+ },
+ 
+ horarioTexto: {
+   fontSize: 16,
+   color: '#333',
+   fontWeight: 'bold',
+   marginBottom: 2,
+ },
+ 
+ acaoHorario: {
+   fontSize: 14,
+   color: '#333',
+ },
+ 
 });
 export default estilos;

@@ -42,14 +42,11 @@ export default function AdminScreen() {
                 <View style={estilos.linhaOpcoes}>
                   <Text style={estilos.colunaTitulo}>Eventos</Text>
                   <View style={estilos.colunaAcoes}>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Adicionar</Text>
+                    <TouchableOpacity style={estilos.botaoAdmin}>
+                      <Text style={estilos.botoesadmin}>Adicionar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Editar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Excluir</Text>
+                    <TouchableOpacity style={estilos.botaoAdmin}>
+                      <Text style={estilos.botoesadmin}>Excluir</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -57,14 +54,11 @@ export default function AdminScreen() {
                 <View style={estilos.linhaOpcoes}>
                   <Text style={estilos.colunaTitulo}>Alunos</Text>
                   <View style={estilos.colunaAcoes}>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Adicionar</Text>
+                    <TouchableOpacity style={estilos.botaoAdmin}>
+                      <Text style={estilos.botoesadmin}>Adicionar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Editar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Excluir</Text>
+                    <TouchableOpacity style={estilos.botaoAdmin}>
+                      <Text style={estilos.botoesadmin}>Excluir</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -72,24 +66,23 @@ export default function AdminScreen() {
                 <View style={estilos.linhaOpcoes}>
                   <Text style={estilos.colunaTitulo}>Professores</Text>
                   <View style={estilos.colunaAcoes}>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Adicionar</Text>
+                    <TouchableOpacity style={estilos.botaoAdmin}>
+                      <Text style={estilos.botoesadmin}>Adicionar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Editar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoMenu}>
-                      <Text style={estilos.botoesmenu}>Excluir</Text>
+                    <TouchableOpacity style={estilos.botaoAdmin}>
+                      <Text style={estilos.botoesadmin}>Excluir</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
-
+                
               </View>
-
+              
             </View>
           </View>
         </View>
       </ScrollView>
+      
     </View>
+    
   );
 }
