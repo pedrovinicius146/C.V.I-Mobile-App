@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
-import { getDatabase, ref, set, get, child } from "firebase/database";
+import { getDatabase, ref, set, get, child, update } from "firebase/database";
 import bcrypt from 'bcryptjs';  // Biblioteca para fazer hash da senha
 
 // Configuração do Firebase
@@ -19,18 +19,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-// Função para gerar uma senha aleatória
-function gerarSenha(tamanho: number) {
-  const caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let senha = '';
-  
-  for (let i = 0; i < tamanho; i++) {
-      const indice = Math.floor(Math.random() * caracteres.length);
-      senha += caracteres[indice];
-  }
-  
-  return senha;
-}
 
 // Função para validar e-mail
 function validarEmail(email: string): boolean {
@@ -38,8 +26,9 @@ function validarEmail(email: string): boolean {
   return regex.test(email);
 }
 
-// Função para cadastrar o aluno no Firebase Authentication e no Realtime Database
-async function CadastrarAluno(nome: string, email: string, senha: string) {
+// Função para cadastrar o aluno
+
+async function CadastrarAluno(nome: string, email: string,senha:string) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
     return;
@@ -73,21 +62,37 @@ async function CadastrarAluno(nome: string, email: string, senha: string) {
   }
 }
 
-// Função para autenticar o aluno com Firebase Authentication e verificar no Realtime Database
-async function autenticarAluno(email: string, senha: string, rota: any) {
+// Função para cadastrar Professores
+async function CadastrarProfessor(nome:string, email:string, senha:string) {
+  if (!validarEmail(email)) {
+    alert('E-mail inválido');
+    return;
+  }
+
+  const database = getDatabase();
+  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
+
   try {
-    // Autenticar o usuário com Firebase Authentication
-    const userCredential = await signInWithEmailAndPassword(auth, email, senha);
-    const user = userCredential.user;
+    await set(ref(database, `Professores/${emailSeguro}`), {
+      nome: nome,
+      email: email,
+      senha: senha
+    });
+    alert('Cadastro realizado com sucesso.');
+  } catch (e) {
+    console.error('Erro no Cadastro:', e);
+    alert('Erro no Cadastro: ' + (typeof e === 'object' && e !== null && 'message' in e ? e.message : 'Ocorreu um erro inesperado.'));
+  }
+}
 
-    if (!user.emailVerified) {
-      alert('Por favor, verifique seu e-mail antes de fazer login.');
-      return;
-    }
 
-    // Verificar autorização no Realtime Database
-    const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
-    const referencia = ref(database);
+async function autenticarAluno(email: string, senha: string,rota:any) {
+  const referencia = ref(database);
+  
+  // Substituindo o @ por _ e . por - para criar um caminho válido
+  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
+  
+  try {
     const snapshot = await get(child(referencia, `Alunos/${emailSeguro}`));
 
     if (snapshot.exists()) {
@@ -109,4 +114,61 @@ async function autenticarAluno(email: string, senha: string, rota: any) {
   }
 }
 
-export { CadastrarAluno, autenticarAluno };
+// Função para obter todos os dados dos alunos
+async function ObterAlunos() {
+  const referencia = ref(database);
+
+  try {
+    const snapshot = await get(child(referencia, 'Alunos'));
+
+    if (snapshot.exists()) {
+      const alunos = snapshot.val();
+      ;
+      return alunos; // Retorna os dados dos alunos
+    } else {
+      console.log('Nenhum dado encontrado para alunos.');
+      return null;
+    }
+  } catch (e) {
+    console.error('Erro ao obter dados dos alunos:', e);
+    alert('Erro ao obter dados dos alunos: ' + String(e));
+  }
+}
+
+// Função para obter todos os dados dos professores
+async function ObterProfessores() {
+  const referencia = ref(database);
+
+  try {
+    const snapshot = await get(child(referencia, 'Professores'));
+
+    if (snapshot.exists()) {
+      const professores = snapshot.val();
+      console.log('Dados dos professores:', professores);
+      return professores; // Retorna os dados dos professores
+    } else {
+      console.log('Nenhum dado encontrado para professores.');
+      return null;
+    }
+  } catch (e) {
+    console.error('Erro ao obter dados dos professores:', e);
+    alert('Erro ao obter dados dos professores: ' + String(e));
+  }
+}
+
+async function AtualizarAluno(email:string, dados:object) {
+  const emailSeguro = email.replace(/[@.]/g, char => (char === '@' ? '_' : '-'));
+  const referencia = ref(database, `Alunos/${emailSeguro}`);
+
+  try {
+    await update(referencia, dados);
+    console.log(`Aluno ${email} atualizado com sucesso.`);
+  } catch (e) {
+    console.error('Erro ao atualizar aluno:', e);
+    throw e;
+  }
+}
+
+
+
+export { CadastrarAluno, autenticarAluno, CadastrarProfessor, ObterAlunos, ObterProfessores, AtualizarAluno };

@@ -1,8 +1,19 @@
 import React from 'react';
 import { View, Text, Image, StatusBar, ScrollView, TouchableOpacity } from 'react-native';
-import estilos from './estilo'; 
+import estilos from './estilo';
+import { useRouter } from 'expo-router';
 
 export default function AdminScreen() {
+  const rota = useRouter();
+
+  function IrParaTabelasAlunos() {
+    rota.push('/tabelaAlunos')
+   }
+
+  function IrParaTabelasProfessores() {
+   rota.push('/tabelaProfessores')
+  }
+
   return (
     <View style={estilos.body}>
       <StatusBar barStyle="light-content" backgroundColor="#075070" />
@@ -22,9 +33,9 @@ export default function AdminScreen() {
                 <View style={[estilos.linhaOpcoes, estilos.cabecalho_Adm]}>
                 </View>
 
-                {/*
+
                 <View style={estilos.linhaOpcoes}>
-                  <Text style={estilos.colunaTitulo}>Disciplinas</Text>
+                  <Text style={estilos.colunaTitulo}>Eventos</Text>
                   <View style={estilos.colunaAcoes}>
                     <TouchableOpacity style={estilos.botaoMenu}>
                       <Text style={estilos.botoesmenu}>Adicionar</Text>
@@ -37,28 +48,12 @@ export default function AdminScreen() {
                     </TouchableOpacity>
                   </View>
                 </View>
-                */}
-
-                <View style={estilos.linhaOpcoes}>
-                  <Text style={estilos.colunaTitulo}>Eventos</Text>
-                  <View style={estilos.colunaAcoes}>
-                    <TouchableOpacity style={estilos.botaoAdmin}>
-                      <Text style={estilos.botoesadmin}>Adicionar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoAdmin}>
-                      <Text style={estilos.botoesadmin}>Excluir</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
 
                 <View style={estilos.linhaOpcoes}>
                   <Text style={estilos.colunaTitulo}>Alunos</Text>
                   <View style={estilos.colunaAcoes}>
-                    <TouchableOpacity style={estilos.botaoAdmin}>
-                      <Text style={estilos.botoesadmin}>Adicionar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoAdmin}>
-                      <Text style={estilos.botoesadmin}>Excluir</Text>
+                    <TouchableOpacity style={estilos.botaoMenu} onPress={IrParaTabelasAlunos}>
+                      <Text style={estilos.botoesmenu}>Ver Todos</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -66,23 +61,18 @@ export default function AdminScreen() {
                 <View style={estilos.linhaOpcoes}>
                   <Text style={estilos.colunaTitulo}>Professores</Text>
                   <View style={estilos.colunaAcoes}>
-                    <TouchableOpacity style={estilos.botaoAdmin}>
-                      <Text style={estilos.botoesadmin}>Adicionar</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={estilos.botaoAdmin}>
-                      <Text style={estilos.botoesadmin}>Excluir</Text>
+                    <TouchableOpacity style={estilos.botaoMenu} onPress={IrParaTabelasProfessores}>
+                      <Text style={estilos.botoesmenu}>Ver Todos</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
-                
+
               </View>
-              
+
             </View>
           </View>
         </View>
       </ScrollView>
-      
     </View>
-    
   );
 }

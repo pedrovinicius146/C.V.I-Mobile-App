@@ -78,6 +78,7 @@ export default function Menu() {
         </View>
 
         <View>
+          <Text>Rodapé</Text>
         </View>
       </View>
     </View>
