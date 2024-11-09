@@ -171,4 +171,4 @@ async function AtualizarAluno(email:string, dados:object) {
 
 
 
-export { CadastrarAluno, autenticarAluno, CadastrarProfessor, ObterAlunos, ObterProfessores, AtualizarAluno };
+export { CadastrarAluno, autenticarAluno, CadastrarProfessor, ObterAlunos, ObterProfessores, AtualizarAluno, database };

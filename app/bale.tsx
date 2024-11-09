@@ -40,28 +40,24 @@ export default function Bale() {
 
          
           <View style={estilos.container_Calendario}>
-            <Text style={estilos.calendarioTitulo}>Horários</Text>
+            <Text style={estilos.calendarioTitulo}>Eventos</Text>
             <View style={estilos.calendarioGrid}>
               
               <View style={estilos.horarioContainer}>
-                <Text style={estilos.horarioTexto}>De tal hora a tal hora</Text>
-                <Text style={estilos.acaoHorario}>O que vai ser praticado</Text>
+                <Text style={estilos.horarioTexto}>Título</Text>
+                <Text style={estilos.acaoHorario}>Descrição</Text>
               </View>
               <View style={estilos.horarioContainer}>
-                <Text style={estilos.horarioTexto}>De tal hora a tal hora</Text>
-                <Text style={estilos.acaoHorario}>O que vai ser praticado</Text>
+                <Text style={estilos.horarioTexto}>Título</Text>
+                <Text style={estilos.acaoHorario}>Descrição</Text>
               </View>
               <View style={estilos.horarioContainer}>
-                <Text style={estilos.horarioTexto}>De tal hora a tal hora</Text>
-                <Text style={estilos.acaoHorario}>O que vai ser praticado</Text>
+                <Text style={estilos.horarioTexto}>Título</Text>
+                <Text style={estilos.acaoHorario}>Descrição</Text>
               </View>
               <View style={estilos.horarioContainer}>
-                <Text style={estilos.horarioTexto}>De tal hora a tal hora</Text>
-                <Text style={estilos.acaoHorario}>O que vai ser praticado</Text>
-              </View>
-              <View style={estilos.horarioContainer}>
-                <Text style={estilos.horarioTexto}>De tal hora a tal hora</Text>
-                <Text style={estilos.acaoHorario}>O que vai ser praticado</Text>
+                <Text style={estilos.horarioTexto}>Título</Text>
+                <Text style={estilos.acaoHorario}>Descrição</Text>
               </View>
               </View>
             </View>
