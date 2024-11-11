@@ -11,7 +11,7 @@ export default function AdminScreen() {
   const [descricaoEvento, setDescricaoEvento] = useState('');
   const rota = useRouter();
 
-  
+  // Funções para navegação
   function IrParaTabelasAlunos() {
     rota.push('/tabelaAlunos');
   }
@@ -28,7 +28,8 @@ export default function AdminScreen() {
 
       await set(novoEventoRef, {
         titulo: tituloEvento,
-        descricao: descricaoEvento
+        descricao: descricaoEvento,
+        timestamp: Date.now()  // Adiciona o timestamp para ordenação
       });
 
       Alert.alert('Sucesso', 'Evento adicionado com sucesso!');
@@ -80,7 +81,7 @@ export default function AdminScreen() {
                 </View>
               </View>
 
-              
+              {/* Formulário para adicionar evento */}
               <View style={estilos.containerEvento}>
                 <Text style={estilos.tituloEvento}>Adicionar Evento de Atividade</Text>
 
