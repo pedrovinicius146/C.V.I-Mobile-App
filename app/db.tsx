@@ -1,24 +1,32 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { getDatabase, ref, set, get, child, update } from "firebase/database";
-import bcrypt from 'bcryptjs';  // Biblioteca para fazer hash da senha
+import { error } from "jquery";
 
 // Configuração do Firebase
+// Import the functions you need from the SDKs you need
+
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCVS7voyBbJfBXygWAknYvAcLZrB5e6_PQ",
   authDomain: "cvi-mobile-teste.firebaseapp.com",
   databaseURL: "https://cvi-mobile-teste-default-rtdb.firebaseio.com",
   projectId: "cvi-mobile-teste",
-  storageBucket: "cvi-mobile-teste.appspot.com",
+  storageBucket: "cvi-mobile-teste.firebasestorage.app",
   messagingSenderId: "561240747529",
   appId: "1:561240747529:web:2e5a7a13452e38be6612d8",
   measurementId: "G-4CYMN6FNB8"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
-
 
 // Função para validar e-mail
 function validarEmail(email: string): boolean {
@@ -27,32 +35,24 @@ function validarEmail(email: string): boolean {
 }
 
 // Função para cadastrar o aluno
-
-async function CadastrarAluno(nome: string, email: string,senha:string) {
+async function CadastrarAluno(nome: string, email: string, senha: string) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
     return;
   }
-
   try {
-    // Criar usuário no Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
     const user = userCredential.user;
-
-    // Atualizar o perfil do usuário com o nome
     await updateProfile(user, { displayName: nome });
-
-    // Enviar e-mail de verificação
     await sendEmailVerification(user);
     
-    // Armazenar dados adicionais no Realtime Database
-    const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-')); // Para criar um caminho válido
+    const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
     await set(ref(database, `Alunos/${emailSeguro}`), {
       nome: nome,
       email: email,
       autorizado: false,
-      uid: user.uid, // Armazenar o UID gerado pelo Authentication
-      senha: senha // Armazenar a senha em texto simples ou hashada
+      uid: user.uid,
+      senha: senha
     });
 
     alert('Cadastro realizado com sucesso! Um e-mail de verificação foi enviado para você.');
@@ -62,14 +62,13 @@ async function CadastrarAluno(nome: string, email: string,senha:string) {
   }
 }
 
-// Função para cadastrar Professores
-async function CadastrarProfessor(nome:string, email:string, senha:string) {
+// Função para cadastrar professores
+async function CadastrarProfessor(nome: string, email: string, senha: string) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
     return;
   }
 
-  const database = getDatabase();
   const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
 
   try {
@@ -81,29 +80,42 @@ async function CadastrarProfessor(nome:string, email:string, senha:string) {
     alert('Cadastro realizado com sucesso.');
   } catch (e) {
     console.error('Erro no Cadastro:', e);
-    alert('Erro no Cadastro: ' + (typeof e === 'object' && e !== null && 'message' in e ? e.message : 'Ocorreu um erro inesperado.'));
+    alert('Erro no Cadastro ' );
   }
 }
 
-
-async function autenticarAluno(email: string, senha: string,rota:any) {
+// Função para autenticar o usuário (aluno ou professor)
+async function autenticarUsuario(email: string, senha: string, rota: any) {
   const referencia = ref(database);
-  
-  // Substituindo o @ por _ e . por - para criar um caminho válido
   const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
-  
+
   try {
-    const snapshot = await get(child(referencia, `Alunos/${emailSeguro}`));
+    const professorSnapshot = await get(child(referencia, `Professores/${emailSeguro}`));
 
-    if (snapshot.exists()) {
-      const aluno = snapshot.val();
-      const autorizado = aluno.autorizado;
-
-      if (autorizado) {
-        alert('Login realizado com sucesso!');
-        rota.push('/menu');
+    if (professorSnapshot.exists()) {
+      const professor = professorSnapshot.val();
+      if (professor.senha === senha) {
+        alert('Login realizado com sucesso! Bem-vindo, Professor!');
+        rota.push('/admin');
       } else {
-        alert('Login não autorizado. Por favor, aguarde a autorização.');
+        alert('Senha incorreta para professor.');
+      }
+      return;
+    }
+
+    const alunoSnapshot = await get(child(referencia, `Alunos/${emailSeguro}`));
+
+    if (alunoSnapshot.exists()) {
+      const aluno = alunoSnapshot.val();
+      if (aluno.senha === senha) {
+        if (aluno.autorizado) {
+          alert('Login realizado com sucesso! Bem-vindo, Aluno!');
+          rota.push('/menu');
+        } else {
+          alert('Login não autorizado. Por favor, aguarde a autorização.');
+        }
+      } else {
+        alert('Senha incorreta para aluno.');
       }
     } else {
       alert('Usuário não encontrado no banco de dados.');
@@ -114,7 +126,6 @@ async function autenticarAluno(email: string, senha: string,rota:any) {
   }
 }
 
-// Função para obter todos os dados dos alunos
 async function ObterAlunos() {
   const referencia = ref(database);
 
@@ -123,8 +134,7 @@ async function ObterAlunos() {
 
     if (snapshot.exists()) {
       const alunos = snapshot.val();
-      ;
-      return alunos; // Retorna os dados dos alunos
+      return alunos;
     } else {
       console.log('Nenhum dado encontrado para alunos.');
       return null;
@@ -135,7 +145,6 @@ async function ObterAlunos() {
   }
 }
 
-// Função para obter todos os dados dos professores
 async function ObterProfessores() {
   const referencia = ref(database);
 
@@ -145,7 +154,7 @@ async function ObterProfessores() {
     if (snapshot.exists()) {
       const professores = snapshot.val();
       console.log('Dados dos professores:', professores);
-      return professores; // Retorna os dados dos professores
+      return professores;
     } else {
       console.log('Nenhum dado encontrado para professores.');
       return null;
@@ -154,21 +163,18 @@ async function ObterProfessores() {
     console.error('Erro ao obter dados dos professores:', e);
     alert('Erro ao obter dados dos professores: ' + String(e));
   }
+
 }
-
-async function AtualizarAluno(email:string, dados:object) {
-  const emailSeguro = email.replace(/[@.]/g, char => (char === '@' ? '_' : '-'));
-  const referencia = ref(database, `Alunos/${emailSeguro}`);
-
+async function AtualizarAluno(email: string, dados: object) {
+  const emailSeguro = email.replace(/[@.]/g, (char) => (char === '@' ? '_' : '-'));
   try {
-    await update(referencia, dados);
+    await update(ref(database, `Alunos/${emailSeguro}`), dados);
     console.log(`Aluno ${email} atualizado com sucesso.`);
-  } catch (e) {
+  } catch (e: any) {
     console.error('Erro ao atualizar aluno:', e);
     throw e;
   }
 }
 
 
-
-export { CadastrarAluno, autenticarAluno, CadastrarProfessor, ObterAlunos, ObterProfessores, AtualizarAluno, database };
+export { CadastrarAluno, autenticarUsuario, CadastrarProfessor, ObterAlunos, ObterProfessores,AtualizarAluno, database };

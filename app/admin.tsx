@@ -20,6 +20,13 @@ export default function AdminScreen() {
     rota.push('/tabelaProfessores');
   }
 
+  function IrParaCadastroProfessor() {
+    rota.push('/CadastroProf'); // Navega para a página de cadastro de professor
+  }
+
+  // Função para navegação até a página de cadastro
+ 
+
   // Função para adicionar um novo evento no Firebase
   const adicionarEvento = async () => {
     if (atividade && tituloEvento && descricaoEvento) {
@@ -83,11 +90,11 @@ export default function AdminScreen() {
 
               {/* Formulário para adicionar evento */}
               <View style={estilos.containerEvento}>
-                <Text style={estilos.tituloEvento}>Adicionar Evento de Atividade</Text>
+                <Text style={estilos.tituloEvento}>Adicionar Evento </Text>
 
                 <TextInput
                   style={estilos.input_text}
-                  placeholder="Atividade (ex: futsal, balé)"
+                  placeholder="Esporte (ex: futsal, balé)"
                   value={atividade}
                   onChangeText={setAtividade}
                 />
@@ -115,6 +122,17 @@ export default function AdminScreen() {
           </View>
         </View>
       </ScrollView>
+
+      {/* Botão flutuante para redirecionar ao Cadastro de Professores */}
+      <TouchableOpacity
+        style={estilos.botaoCadastroProf}
+        onPress={IrParaCadastroProfessor}
+      >
+        <Text style={estilos.textoBotaoCadastroProf}>Cadastrar Professor</Text>
+      </TouchableOpacity>
+
+      {/* Novo botão para redirecionar ao Cadastro geral */}
+     
     </View>
   );
 }

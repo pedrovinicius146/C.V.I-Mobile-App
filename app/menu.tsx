@@ -9,9 +9,7 @@ export default function Menu() {
   return (
     <View style={estilos.body}>
       <StatusBar barStyle="light-content" backgroundColor="#075070" />
-      <TouchableOpacity style={estilos.iconContainer}>
-            <Icon name="bars" size={30} color="#fff" />
-          </TouchableOpacity>
+   
       <View style={estilos.top}>
         <View style={estilos.container_img}>
           <Image
@@ -78,7 +76,7 @@ export default function Menu() {
         </View>
 
         <View>
-          <Text>Rodapé</Text>
+          
         </View>
       </View>
     </View>

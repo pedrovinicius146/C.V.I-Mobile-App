@@ -2,7 +2,7 @@ import { Image, StatusBar, Text, TextInput, TouchableOpacity, View } from "react
 import estilos from "./estilo";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
-import { autenticarAluno } from './db'; 
+import { autenticarUsuario } from './db'; // Atualizado para autenticarUsuario
 
 export default function Index() {
   const [email, setEmail] = useState("");
@@ -10,8 +10,11 @@ export default function Index() {
   const rota = useRouter(); // Para navegação
 
   const handleLogin = async () => {
-    await autenticarAluno(email, senha, rota);
+    await autenticarUsuario(email, senha, rota);
   };
+  function IrParaCadastro() {
+    rota.push('/cadastro'); // Navega para a página de cadastro
+  }
 
   return (
     <View style={estilos.body}>
@@ -59,19 +62,23 @@ export default function Index() {
             <TouchableOpacity style={estilos.botao} onPress={handleLogin}>
               <Text style={estilos.texto_botao}>Entrar</Text>
             </TouchableOpacity>
-          </View>
 
-          <Link href='/cadastro'>Ir para cadastro</Link>
-          <Link href='/admin'>Ir para o admin</Link>
-          <Link style={{ color: 'blue' }} href='/menu'>Ir para o menu</Link>
+            {/* Botão de navegação para o cadastro abaixo do botão de login */}
+            <TouchableOpacity
+              style={estilos.botaoCadastro}
+              onPress={IrParaCadastro}
+            >
+              <Text style={estilos.textoBotaoCadastro}>Ir para Cadastro</Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={estilos.container_rodape}>
-          <Link href='whatsapp://send?phone=+558199644185' style={estilos.iconContainer}>
+          <Link href='whatsapp://send?phone=+558199282745' style={estilos.iconContainer}>
             <Image style={estilos.imagemIconeInstagram} source={require('../assets/images/wpplogo.png')} />
           </Link>
 
-          <Link href='instagram://user?username=andrelbp_' style={estilos.iconContainer}>
+          <Link href='instagram://user?username=cvijanga' style={estilos.iconContainer}>
             <Image style={estilos.imagemIconeInstagram} source={require('../assets/images/instalogo.png')} />
           </Link>
         </View>

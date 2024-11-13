@@ -48,6 +48,7 @@ export default function Cadastro() {
               onChangeText={setSenha}
               secureTextEntry // Para ocultar a senha digitada
             />
+            
 
             <TouchableOpacity
               style={estilos.botao}

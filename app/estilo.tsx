@@ -45,7 +45,7 @@ const estilos = StyleSheet.create({
       borderBottomRightRadius: 15,
       paddingVertical: 10,
       backgroundColor: '#075070',
-      marginBottom: 0,
+      marginBottom: 10,
    },
    texto_botao: {
       textAlign: 'center',
@@ -59,7 +59,7 @@ const estilos = StyleSheet.create({
       justifyContent: 'center',
    },
    container_login: {
-      marginTop: 50,
+      marginTop: 100,
       width: 400,
       alignItems: 'center'
    },
@@ -140,18 +140,21 @@ const estilos = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 45,
+      padding: 50,
    },
    iconContainer: {
       flexDirection: 'row',
       justifyContent: 'center',
-      alignItems: 'center',
-      padding: 15,
+      alignItems: 'flex-start',
+      padding: 37,
+      
    },
    imagemIconeInstagram: {
       width: 40,
       height: 40,
       resizeMode: 'contain',
+      
+      
    },
    containerOpcoes: {
       borderTopColor: '#ddd',
@@ -307,6 +310,37 @@ const estilos = StyleSheet.create({
       fontSize: 14,
       color: '#333',
    },
+   botaoCadastroProf: {
+      position: 'absolute',
+      top: 20, // Alinha o botão no topo
+      left: 20, // Alinha o botão à esquerda
+      backgroundColor: '#075070',
+      paddingVertical: 10,
+      paddingHorizontal: 15,
+      borderRadius: 25,
+      elevation: 3, // Sombra
+    },
+    textoBotaoCadastroProf: {
+      color: '#fff',
+      fontSize: 12,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    botaoCadastro: {
+      marginTop: 20, // Espaçamento entre o botão de login e o de cadastro
+      backgroundColor: '#075070', // Cor de fundo
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      borderRadius: 5, // Bordas arredondadas
+      elevation: 5, // Sombra
+    },
+  
+    textoBotaoCadastro: {
+      color: '#fff', // Cor do texto
+      fontSize: 16, // Tamanho do texto
+      fontWeight: 'bold', // Negrito
+      textAlign: 'center', // Centraliza o texto no botão
+    },
 });
 
 export default estilos;
