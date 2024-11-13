@@ -194,14 +194,16 @@ const estilos = StyleSheet.create({
    },
    colunaTitulo: {
       flex: 1,
-      fontSize: 16,
-      color: '#333',
+      fontSize: 32,
+      color: '333rr',
       textAlign: 'left',
       paddingHorizontal: 5,
       backgroundColor: '#ddd',
       borderRadius: 10,
       padding: 12,
       marginHorizontal: 6.3,
+      width: 100,
+      
    },
    colunaAcoes: {
       flexDirection: 'row',
