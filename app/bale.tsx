@@ -4,7 +4,7 @@ import estilos from "./estilo";
 import { ref, onValue } from "firebase/database";
 import { database } from "./db";
 
-type Evento = {
+type Aviso = {
   id: string;
   titulo: string;
   descricao: string;
@@ -12,32 +12,32 @@ type Evento = {
 };
 
 export default function Bale() {
-  const [eventosArray, setEventosArray] = useState<Evento[]>([]);
+  const [avisosArray, setAvisosArray] = useState<Aviso[]>([]);
 
   useEffect(() => {
-    const eventosRef = ref(database, "Atividades/balé/Eventos");
+    const avisosRef = ref(database, "Atividades/ballet/Avisos");
 
-    const unsubscribe = onValue(eventosRef, (snapshot) => {
+    const unsubscribe = onValue(avisosRef, (snapshot) => {
       if (snapshot.exists()) {
-        const eventos: Evento[] = [];
+        const avisos: Aviso[] = [];
         snapshot.forEach((childSnapshot) => {
-          const eventoData = childSnapshot.val();
-          eventos.push({
+          const avisoData = childSnapshot.val();
+          avisos.push({
             id: childSnapshot.key || "",
-            titulo: eventoData.titulo || "",
-            descricao: eventoData.descricao || "",
-            timestamp: eventoData.timestamp || 0,
+            titulo: avisoData.titulo || "",
+            descricao: avisoData.descricao || "",
+            timestamp: avisoData.timestamp || 0,
           });
         });
 
-        // Ordena por timestamp em ordem decrescente e limita a 4 eventos
-        const eventosOrdenados = eventos
+        // Ordena por timestamp em ordem decrescente e limita a 4 avisos
+        const avisosOrdenados = avisos
           .sort((a, b) => b.timestamp - a.timestamp)
           .slice(0, 4);
 
-        setEventosArray(eventosOrdenados);
+        setAvisosArray(avisosOrdenados);
       } else {
-        console.log("Nenhum evento encontrado.");
+        console.log("Nenhum aviso encontrado.");
       }
     });
 
@@ -68,27 +68,27 @@ export default function Bale() {
                 <Text style={estilos.professor}>Prof Fulano</Text>
               </View>
 
-              <View style={estilos.containerEvento}>
-                <Text style={estilos.tituloEvento}>Próximo evento</Text>
-                {eventosArray.length > 0 ? (
-                  <View style={estilos.caixaEvento}>
-                    <Text style={estilos.textoEvento}>
-                      {eventosArray[0].titulo} - {eventosArray[0].descricao}
+              <View style={estilos.containerAvisos}>
+                <Text style={estilos.tituloAvisos}>Último Aviso</Text>
+                {avisosArray.length > 0 ? (
+                  <View style={estilos.caixaAvisos}>
+                    <Text style={estilos.textoAvisos}>
+                      {avisosArray[0].titulo} - {avisosArray[0].descricao}
                     </Text>
                   </View>
                 ) : (
-                  <Text style={estilos.textoEvento}>Nenhum evento disponível</Text>
+                  <Text style={estilos.textoAvisos}>Nenhum aviso disponível</Text>
                 )}
               </View>
             </View>
 
             <View style={estilos.container_Calendario}>
-              <Text style={estilos.calendarioTitulo}>Eventos</Text>
+              <Text style={estilos.calendarioTitulo}>Avisos</Text>
               <View style={estilos.calendarioGrid}>
-                {eventosArray.map((evento) => (
-                  <View key={evento.id} style={estilos.horarioContainer}>
-                    <Text style={estilos.horarioTexto}>{evento.titulo}</Text>
-                    <Text style={estilos.acaoHorario}>{evento.descricao}</Text>
+                {avisosArray.map((aviso) => (
+                  <View key={aviso.id} style={estilos.horarioContainer}>
+                    <Text style={estilos.horarioTexto}>{aviso.titulo}</Text>
+                    <Text style={estilos.acaoHorario}>{aviso.descricao}</Text>
                   </View>
                 ))}
               </View>

@@ -7,9 +7,12 @@ import { useRouter } from 'expo-router';
 
 export default function AdminScreen() {
   const [atividade, setAtividade] = useState('');
-  const [tituloEvento, setTituloEvento] = useState('');
-  const [descricaoEvento, setDescricaoEvento] = useState('');
+  const [tituloAviso, setTituloAviso] = useState('');
+  const [descricaoAviso, setDescricaoAviso] = useState('');
   const rota = useRouter();
+
+  // Lista de atividades permitidas
+  const atividadesPermitidas = ['ballet', 'basquete', 'judô', 'vôlei', 'futsal', 'natação'];
 
   // Funções para navegação
   function IrParaTabelasAlunos() {
@@ -24,27 +27,30 @@ export default function AdminScreen() {
     rota.push('/CadastroProf'); // Navega para a página de cadastro de professor
   }
 
-  // Função para navegação até a página de cadastro
- 
+  // Função para adicionar um novo aviso no Firebase
+  const adicionarAviso = async () => {
+    // Verificação de atividade permitida
+    if (!atividadesPermitidas.includes(atividade.toLowerCase())) {
+      Alert.alert('Erro', 'Atividade inválida. Escolha uma atividade válida.');
+      return;
+    }
 
-  // Função para adicionar um novo evento no Firebase
-  const adicionarEvento = async () => {
-    if (atividade && tituloEvento && descricaoEvento) {
-      const eventoRef = ref(database, `Atividades/${atividade}/Eventos`);
-      const novoEventoRef = push(eventoRef);
+    if (atividade && tituloAviso && descricaoAviso) {
+      const avisoRef = ref(database, `Atividades/${atividade}/Avisos`);
+      const novoAvisoRef = push(avisoRef);
 
-      await set(novoEventoRef, {
-        titulo: tituloEvento,
-        descricao: descricaoEvento,
-        timestamp: Date.now()  // Adiciona o timestamp para ordenação
+      await set(novoAvisoRef, {
+        titulo: tituloAviso,
+        descricao: descricaoAviso,
+        timestamp: Date.now() // Adiciona o timestamp para ordenação
       });
 
-      Alert.alert('Sucesso', 'Evento adicionado com sucesso!');
+      Alert.alert('Sucesso', 'Aviso adicionado com sucesso!');
       setAtividade('');
-      setTituloEvento('');
-      setDescricaoEvento('');
+      setTituloAviso('');
+      setDescricaoAviso('');
     } else {
-      Alert.alert('Erro', 'Preencha todos os campos para adicionar o evento.');
+      Alert.alert('Erro', 'Preencha todos os campos para adicionar o aviso.');
     }
   };
 
@@ -88,34 +94,34 @@ export default function AdminScreen() {
                 </View>
               </View>
 
-              {/* Formulário para adicionar evento */}
-              <View style={estilos.containerEvento}>
-                <Text style={estilos.tituloEvento}>Adicionar Evento </Text>
+              {/* Formulário para adicionar aviso */}
+              <View style={estilos.containerAvisos}>
+                <Text style={estilos.tituloAvisos}>Adicionar Aviso </Text>
 
                 <TextInput
                   style={estilos.input_text}
-                  placeholder="Esporte (ex: futsal, balé)"
+                  placeholder="Esporte (ex: futsal, ballet)"
                   value={atividade}
                   onChangeText={setAtividade}
                 />
 
                 <TextInput
                   style={estilos.input_text}
-                  placeholder="Título do Evento"
-                  value={tituloEvento}
-                  onChangeText={setTituloEvento}
+                  placeholder="Título do Aviso"
+                  value={tituloAviso}
+                  onChangeText={setTituloAviso}
                 />
 
                 <TextInput
                   style={[estilos.input_text, { height: 100, textAlignVertical: 'top' }]}
-                  placeholder="Descrição do Evento"
-                  value={descricaoEvento}
-                  onChangeText={setDescricaoEvento}
+                  placeholder="Descrição do Aviso"
+                  value={descricaoAviso}
+                  onChangeText={setDescricaoAviso}
                   multiline
                 />
 
-                <TouchableOpacity style={estilos.botao} onPress={adicionarEvento}>
-                  <Text style={estilos.texto_botao}>Adicionar Evento</Text>
+                <TouchableOpacity style={estilos.botao} onPress={adicionarAviso}>
+                  <Text style={estilos.texto_botao}>Adicionar Aviso</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -130,9 +136,6 @@ export default function AdminScreen() {
       >
         <Text style={estilos.textoBotaoCadastroProf}>Cadastrar Professor</Text>
       </TouchableOpacity>
-
-      {/* Novo botão para redirecionar ao Cadastro geral */}
-     
     </View>
   );
 }

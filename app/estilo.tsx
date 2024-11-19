@@ -235,23 +235,23 @@ const estilos = StyleSheet.create({
       fontSize: 16,
       color: '#333',
    },
-   containerEvento: {
+   containerAvisos: {
       marginVertical: 20,
       alignItems: 'center',
    },
-   tituloEvento: {
+   tituloAvisos: {
       fontSize: 20,
       fontWeight: 'bold',
       color: '#075070',
    },
-   caixaEvento: {
+   caixaAvisos: {
       width: '100%',
       backgroundColor: '#E0E0E0',
       borderRadius: 10,
       padding: 20,
       marginTop: 10,
    },
-   textoEvento: {
+   textoAvisos: {
       fontSize: 16,
       color: '#333',
    },
