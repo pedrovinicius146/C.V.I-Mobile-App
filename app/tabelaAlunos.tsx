@@ -13,23 +13,33 @@ interface Aluno {
 export default function TabelaAlunos() {
     const [alunos, setAlunos] = useState<Aluno[]>([]);
 
+    // Função para buscar os alunos não autorizados
     useEffect(() => {
         const fetchAlunos = async () => {
-            const dadosAlunos = await ObterAlunos();
-            if (dadosAlunos) {
-                const alunosArray: Aluno[] = Object.values(dadosAlunos).filter((aluno): aluno is Aluno => !aluno.autorizado);
-                setAlunos(alunosArray);
-            } else {
-                console.log('Nenhum aluno encontrado');
+            try {
+                const dadosAlunos = await ObterAlunos();
+                console.log('Dados dos alunos:', dadosAlunos); // Verificar o que está sendo retornado
+                if (dadosAlunos) {
+                    const alunosArray: Aluno[] = Object.values(dadosAlunos).filter((aluno): aluno is Aluno => 
+                        aluno.nome && aluno.email && aluno.autorizado === false
+                    );
+                    setAlunos(alunosArray);
+                } else {
+                    console.log('Nenhum aluno encontrado');
+                }
+            } catch (error) {
+                console.error('Erro ao buscar alunos:', error);
             }
         };
         fetchAlunos();
     }, []);
 
+    // Função para autorizar um aluno
     async function autorizarAluno(email: string) {
         try {
             await AtualizarAluno(email, { autorizado: true });
             Alert.alert('Sucesso', 'Aluno autorizado com sucesso!');
+            // Remove o aluno da lista após autorização
             setAlunos(alunos.filter(aluno => aluno.email !== email));
         } catch (error) {
             console.error('Erro ao autorizar aluno:', error);
@@ -60,9 +70,9 @@ export default function TabelaAlunos() {
                                 
                                 <ScrollView>
                                     {alunos.map((aluno, index) => (
-                                        <View key={index} style={estilos.linhaOpcoes}>
-                                            <Text style={[estilos.colunaTitulo, { color: 'black', fontSize: 16 }]}>
-                                                {aluno.nome ? aluno.nome : "Nome não disponível"}
+                                        <View key={index} style={estilos.linha}>
+                                            <Text style={estilos.coluna}>
+                                                {aluno.nome || "Nome não disponível"} {/* Exibir nome ou fallback */}
                                             </Text>
                                             <TouchableOpacity style={estilos.botaoMenu} onPress={() => autorizarAluno(aluno.email)}>
                                                 <Text style={estilos.botoesmenu}>Autorizar</Text>

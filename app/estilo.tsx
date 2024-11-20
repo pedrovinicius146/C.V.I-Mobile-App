@@ -56,7 +56,7 @@ const estilos = StyleSheet.create({
       display: 'flex',
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center',
+      
    },
    container_login: {
       marginTop: 100,
@@ -338,11 +338,24 @@ const estilos = StyleSheet.create({
     },
   
     textoBotaoCadastro: {
-      color: '#fff', // Cor do texto
+      color: '#fff', // Cor do text
       fontSize: 16, // Tamanho do texto
       fontWeight: 'bold', // Negrito
       textAlign: 'center', // Centraliza o texto no botão
     },
+    linha:{
+      width:280,
+      height:50,
+      display:'flex',
+      flexDirection:'row',
+      backgroundColor:'grey',
+      borderRadius:10      
+    },
+    coluna:{
+      marginTop:15,
+      marginLeft:8,
+      marginRight:'auto'
+    }
 });
 
 export default estilos;

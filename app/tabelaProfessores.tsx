@@ -41,9 +41,9 @@ export default function TabelaProfessores() {
                         <Text style={estilos.texto_login}>Lista de Professores</Text>
                         <ScrollView>
                             {professores.map((professor, index) => (
-                                <View key={index} style={estilos.linhaOpcoes}>
-                                    <Text style={estilos.colunaTitulo}>
-                                        Nome: {professor.nome || "Nome não disponível"}
+                                <View key={index} style={estilos.linha}>
+                                    <Text style={estilos.coluna}>
+                                        {professor.nome || "Nome não disponível"}
                                     </Text>
                                     
                                 </View>

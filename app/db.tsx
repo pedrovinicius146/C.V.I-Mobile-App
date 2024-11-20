@@ -35,7 +35,7 @@ function validarEmail(email: string): boolean {
 }
 
 // Função para cadastrar o aluno
-async function CadastrarAluno(nome: string, email: string, senha: string) {
+async function CadastrarAluno(nome: string, email: string, senha: string,rota:any) {
   if (!validarEmail(email)) {
     alert('E-mail inválido');
     return;
@@ -56,6 +56,7 @@ async function CadastrarAluno(nome: string, email: string, senha: string) {
     });
 
     alert('Cadastro realizado com sucesso! Um e-mail de verificação foi enviado para você.');
+    rota.push('/')
   } catch (e: any) {
     console.error('Erro no Cadastro:', e);
     alert('Erro no Cadastro: ' + (e.message || 'Ocorreu um erro inesperado.'));

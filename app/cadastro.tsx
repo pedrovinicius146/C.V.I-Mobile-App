@@ -2,14 +2,17 @@ import { Image, StatusBar, Text, TextInput, TouchableOpacity, View } from "react
 import estilos from "./estilo";
 import { useState } from "react";
 import { CadastrarAluno } from "./db";
+import { useRouter} from "expo-router";
 
 export default function Cadastro() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const rota=useRouter()
 
   const handleCadastro = async () => {
-    await CadastrarAluno(nome, email, senha);
+    await CadastrarAluno(nome, email, senha,rota);
+    
   };
 
   return (
