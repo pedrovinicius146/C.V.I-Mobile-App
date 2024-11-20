@@ -60,7 +60,7 @@ export default function Index() {
                     Esqueceu sua senha?{" "}
                     <Text
                       style={estilos.link_senha}
-                      onPress={() => rota.push("/admin")} 
+                      onPress={() => rota.push("/redefinirsenha")} 
                     >
                       Clique Aqui
                     </Text>
