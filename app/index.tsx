@@ -1,4 +1,4 @@
-import { Image, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
+import { Image, StatusBar, Text,TextInput, TouchableOpacity, View, Linking, ScrollView, KeyboardAvoidingView, Platform } from "react-native";
 import estilos from "./estilo";
 import { useState } from "react";
 import { Link, useRouter } from "expo-router";
@@ -15,8 +15,18 @@ export default function Index() {
   
   function IrParaCadastro() {
     rota.push('/cadastro');
+  
   }
-
+  const abrirwpp = () => {
+    Linking.openURL('whatsapp://send?phone=+558199282745').catch(err =>
+      console.error('Erro ao abrir o WhatsApp:', err)
+    );
+  };
+  const abririnsta = () => {
+    Linking.openURL('instagram://user?username=cvijanga').catch(err =>
+      console.error('Erro ao abrir o Instagram:', err)
+    );
+  };
   return (
     <KeyboardAvoidingView 
       style={{ flex: 1 }}
@@ -66,6 +76,7 @@ export default function Index() {
                     </Text>
                   </Text>
                 </View>
+                
 
                 <TouchableOpacity style={estilos.botao} onPress={handleLogin}>
                   <Text style={estilos.texto_botao}>Entrar</Text>
@@ -76,19 +87,26 @@ export default function Index() {
                   onPress={IrParaCadastro}
                 >
                   <Text style={estilos.textoBotaoCadastro}>Ir para Cadastro</Text>
+
+              
                 </TouchableOpacity>
               </View>
             </View>
 
             <View style={estilos.container_rodape}>
-              <Link href='whatsapp://send?phone=+558199282745' style={estilos.iconContainer}>
-                <Image style={estilos.imagemIconeInstagram} source={require('../assets/images/wpplogo.png')} />
-              </Link>
-
-              <Link href='instagram://user?username=cvijanga' style={estilos.iconContainer}>
-                <Image style={estilos.imagemIconeInstagram} source={require('../assets/images/instalogo.png')} />
-              </Link>
-            </View>
+            <TouchableOpacity onPress={abrirwpp}>
+            <Image
+            style={estilos.imagemIcone}
+           source={require('../assets/images/wpplogo.png')}
+            />
+             </TouchableOpacity>
+            <TouchableOpacity onPress={abririnsta}>
+              <Image
+            style={estilos.imagemIcone}
+            source={require('../assets/images/instalogo.png')}
+         />
+             </TouchableOpacity>
+            </View>
           </View>
         </View>
       </ScrollView>

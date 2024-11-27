@@ -1,15 +1,16 @@
-import { Image, StatusBar, Text, View, TouchableOpacity } from "react-native";
+import { Image, StatusBar, Text, View, TouchableOpacity, Linking } from "react-native";
+import { StyleSheet } from "react-native";
 import estilos from "./estilo"; 
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { Link, useRouter } from "expo-router";
 
+ 
 export default function Menu() {
   const rota = useRouter();
 
   return (
     <View style={estilos.body}>
       <StatusBar barStyle="light-content" backgroundColor="#075070" />
-   
+
       <View style={estilos.top}>
         <View style={estilos.container_img}>
           <Image
@@ -21,64 +22,76 @@ export default function Menu() {
 
       <View style={estilos.bottom}>
         <View style={estilos.container_main__login}>
-
           <View style={estilos.container_menu_opcoes}>
             <View style={estilos.imageContainer}>
-                  <TouchableOpacity onPress={() => rota.push('/futsal')}>
-                    <Image
-                      style={estilos.imagemenu}
-                      source={require("../assets/images/futsallogo.png")}
-                    />
-                  </TouchableOpacity>
+              <TouchableOpacity onPress={() => rota.push('/futsal')}>
+                <View style={estilos.iconview}>
+                  <Image
+                    style={estilos.imagemenu}
+                    source={require("../assets/images/futsallogo.png")}
+                  />
+                  <Text style={estilos.textoiconesmenu}>Futsal</Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View style={estilos.imageContainer}>
-              <TouchableOpacity onPress={() => rota.push('/bale')} >
-                <Image
-                  style={estilos.imagemenu}
-                  source={require("../assets/images/balletlogo.png")}
-                />
+              <TouchableOpacity onPress={() => rota.push('/bale')}>
+                <View style={estilos.iconview}>
+                  <Image
+                    style={estilos.imagemenu}
+                    source={require("../assets/images/balletlogo.png")}
+                  />
+                  <Text style={estilos.textoiconesmenu}>Ballet</Text>
+                </View>
               </TouchableOpacity>
             </View>
             <View style={estilos.imageContainer}>
               <TouchableOpacity onPress={() => rota.push('/volei')}>
-                <Image
-                  style={estilos.imagemenu}
-                  source={require("../assets/images/voleilogo.png")}
-                />
+                <View style={estilos.iconview}>
+                  <Image
+                    style={estilos.imagemenu}
+                    source={require("../assets/images/voleilogo.png")}
+                  />
+                  <Text style={estilos.textoiconesmenu}>Vôlei</Text>
+                </View>
               </TouchableOpacity>
             </View>
             <View style={estilos.imageContainer}>
               <TouchableOpacity onPress={() => rota.push('/basquete')}>
-                <Image
-                  style={estilos.imagemenu}
-                  source={require("../assets/images/basquetelogo.png")}
-                />
+                <View style={estilos.iconview}>
+                  <Image
+                    style={estilos.imagemenu}
+                    source={require("../assets/images/basquetelogo.png")}
+                  />
+                  <Text style={estilos.textoiconesmenu}>Basquete</Text>
+                </View>
               </TouchableOpacity>
             </View>
             <View style={estilos.imageContainer}>
               <TouchableOpacity onPress={() => rota.push('/natacao')}>
-                <Image
-                  style={estilos.imagemenu}
-                  source={require("../assets/images/natacaologo.png")}
-                />
+                <View style={estilos.iconview}>
+                  <Image
+                    style={estilos.imagemenu}
+                    source={require("../assets/images/natacaologo.png")}
+                  />
+                  <Text style={estilos.textoiconesmenu}>Natação</Text>
+                </View>
               </TouchableOpacity>
             </View>
             <View style={estilos.imageContainer}>
               <TouchableOpacity onPress={() => rota.push('/judo')}>
-                <Image
-                  style={estilos.imagemenu}
-                  source={require("../assets/images/judologo.png")}
-                />
+                <View style={estilos.iconview}>
+                  <Image
+                    style={estilos.imagemenu}
+                    source={require("../assets/images/judologo.png")}
+                  />
+                  <Text style={estilos.textoiconesmenu}>Judô</Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
-
-        </View>
-
-        <View>
-          
         </View>
       </View>
-    </View>
-  );
+    </View>
+  );
 }

@@ -68,7 +68,7 @@ export default function AdminScreen() {
         <View style={estilos.bottom}>
           <View style={estilos.container_main__login}>
             <View style={estilos.container_login}>
-              <Text style={estilos.texto_login}>Administração</Text>
+              <Text style={estilos.texto_adm}>Administração</Text>
 
               <View style={estilos.containerOpcoes}>
                 <View style={[estilos.linhaOpcoes, estilos.cabecalho_Adm]}>
@@ -124,18 +124,21 @@ export default function AdminScreen() {
                   <Text style={estilos.texto_botao}>Adicionar Aviso</Text>
                 </TouchableOpacity>
               </View>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-
-      {/* Botão flutuante para redirecionar ao Cadastro de Professores */}
-      <TouchableOpacity
+              <TouchableOpacity
         style={estilos.botaoCadastroProf}
         onPress={IrParaCadastroProfessor}
       >
         <Text style={estilos.textoBotaoCadastroProf}>Cadastrar Professor</Text>
       </TouchableOpacity>
+              
+            </View>
+          </View>
+        </View>
+        
+      </ScrollView>
+
+      {/* Botão flutuante para redirecionar ao Cadastro de Professores */}
+      
     </View>
   );
 }

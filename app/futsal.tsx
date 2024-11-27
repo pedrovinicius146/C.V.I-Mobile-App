@@ -69,7 +69,7 @@ export default function Futsal() {
               </View>
 
               <View style={estilos.containerAvisos}>
-                <Text style={estilos.tituloAvisos}>Útilmo Aviso</Text>
+                <Text style={estilos.tituloAvisos}>Último Aviso</Text>
                 {avisosArray.length > 0 ? (
                   <View style={estilos.caixaAvisos}>
                     <Text style={estilos.textoAvisos}>

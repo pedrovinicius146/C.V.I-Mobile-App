@@ -59,7 +59,7 @@ const estilos = StyleSheet.create({
       
    },
    container_login: {
-      marginTop: 100,
+      marginTop: 50,
       width: 400,
       alignItems: 'center'
    },
@@ -194,7 +194,7 @@ const estilos = StyleSheet.create({
    },
    colunaTitulo: {
       flex: 1,
-      fontSize: 32,
+      fontSize: 18,
       color: '333rr',
       textAlign: 'left',
       paddingHorizontal: 5,
@@ -208,7 +208,7 @@ const estilos = StyleSheet.create({
    colunaAcoes: {
       flexDirection: 'row',
       justifyContent: 'space-around',
-      paddingHorizontal: 5,
+      paddingHorizontal: 4,
    },
    headerCell: {
       fontWeight: 'bold',
@@ -236,8 +236,9 @@ const estilos = StyleSheet.create({
       color: '#333',
    },
    containerAvisos: {
-      marginVertical: 20,
+      marginVertical: 1,
       alignItems: 'center',
+      marginBottom:45
    },
    tituloAvisos: {
       fontSize: 20,
@@ -313,18 +314,19 @@ const estilos = StyleSheet.create({
       color: '#333',
    },
    botaoCadastroProf: {
+      width:225,
       position: 'absolute',
-      top: 20, // Alinha o botão no topo
-      left: 20, // Alinha o botão à esquerda
+      textAlign : 'center',
+      bottom:8,
       backgroundColor: '#075070',
       paddingVertical: 10,
       paddingHorizontal: 15,
-      borderRadius: 25,
-      elevation: 3, // Sombra
+      borderTopLeftRadius: 10,
+      borderBottomRightRadius: 15,
     },
     textoBotaoCadastroProf: {
       color: '#fff',
-      fontSize: 12,
+      fontSize: 14,
       fontWeight: 'bold',
       textAlign: 'center',
     },
@@ -355,7 +357,28 @@ const estilos = StyleSheet.create({
       marginTop:15,
       marginLeft:8,
       marginRight:'auto'
-    }
+    },
+    imagemIcone:{
+      width: 45, 
+      height: 45, 
+     resizeMode: 'contain', 
+     marginHorizontal: 15,
+   },
+textoiconesmenu: {
+   marginTop: 1,
+   fontSize: 17,
+   color: "#333",
+   textAlign: "center",
+    },
+iconview: {
+   alignItems: "center",
+   justifyContent: "center",
+ },
+ texto_adm: {
+   fontSize: 40,
+   fontWeight: '500',
+   marginBottom: 45
+},
 });
 
 export default estilos;
