@@ -1,9 +1,7 @@
-import { Image, StatusBar, Text, View, TouchableOpacity, Linking } from "react-native";
-import { StyleSheet } from "react-native";
+import { Image, StatusBar, Text, View, TouchableOpacity } from "react-native";
 import estilos from "./estilo"; 
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 
- 
 export default function Menu() {
   const rota = useRouter();
 
@@ -92,6 +90,14 @@ export default function Menu() {
           </View>
         </View>
       </View>
-    </View>
-  );
+
+      {/* Botão dos horarios By Bray */}
+      <TouchableOpacity 
+        style={[estilos.botao, { position: 'absolute', bottom: 20, alignSelf: 'center' }]} 
+        onPress={() => rota.push('./horario')}
+      >
+        <Text style={estilos.texto_botao}>Ver Horários</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }

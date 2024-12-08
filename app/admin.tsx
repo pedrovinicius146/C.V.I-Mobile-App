@@ -9,6 +9,8 @@ export default function AdminScreen() {
   const [atividade, setAtividade] = useState('');
   const [tituloAviso, setTituloAviso] = useState('');
   const [descricaoAviso, setDescricaoAviso] = useState('');
+  const [horario, setHorario] = useState('');
+  const [atividadeHorario, setAtividadeHorario] = useState('');
   const rota = useRouter();
 
   // Lista de atividades permitidas
@@ -29,7 +31,6 @@ export default function AdminScreen() {
 
   // Função para adicionar um novo aviso no Firebase
   const adicionarAviso = async () => {
-    // Verificação de atividade permitida
     if (!atividadesPermitidas.includes(atividade.toLowerCase())) {
       Alert.alert('Erro', 'Atividade inválida. Escolha uma atividade válida.');
       return;
@@ -51,6 +52,38 @@ export default function AdminScreen() {
       setDescricaoAviso('');
     } else {
       Alert.alert('Erro', 'Preencha todos os campos para adicionar o aviso.');
+    }
+  };
+
+  // Função para adicionar horário no Firebase
+  const adicionarHorario = async () => {
+    if (!atividadesPermitidas.includes(atividadeHorario.toLowerCase())) {
+      Alert.alert(
+        'Erro',
+        `Atividade inválida. Escolha entre: ${atividadesPermitidas.join(', ')}.`
+      );
+      return;
+    }
+
+    if (atividadeHorario && horario) {
+      try {
+        const horarioRef = ref(database, `Horarios/${atividadeHorario.toLowerCase()}`);
+        const novoHorarioRef = push(horarioRef);
+
+        await set(novoHorarioRef, {
+          horario: horario,
+          timestamp: Date.now() // Adiciona o timestamp para ordenação
+        });
+
+        Alert.alert('Sucesso', `Horário para "${atividadeHorario}" adicionado com sucesso!`);
+        setAtividadeHorario('');
+        setHorario('');
+      } catch (error) {
+        Alert.alert('Erro', 'Houve um problema ao adicionar o horário. Tente novamente.');
+        console.error('Erro ao adicionar horário: ', error);
+      }
+    } else {
+      Alert.alert('Erro', 'Preencha todos os campos para adicionar o horário.');
     }
   };
 
@@ -124,21 +157,37 @@ export default function AdminScreen() {
                   <Text style={estilos.texto_botao}>Adicionar Aviso</Text>
                 </TouchableOpacity>
               </View>
-              <TouchableOpacity
-        style={estilos.botaoCadastroProf}
-        onPress={IrParaCadastroProfessor}
-      >
-        <Text style={estilos.textoBotaoCadastroProf}>Cadastrar Professor</Text>
-      </TouchableOpacity>
-              
+
+              {/* Formulário para adicionar horário */}
+              <View style={estilos.containerAvisos}>
+                <Text style={estilos.tituloAvisos}>Adicionar Horário</Text>
+
+                <TextInput
+                  style={estilos.input_text}
+                  placeholder="Atividade (ex: ballet, futsal)"
+                  value={atividadeHorario}
+                  onChangeText={setAtividadeHorario}
+                />
+
+                <TextInput
+                  style={estilos.input_text}
+                  placeholder="Horário (ex: 10:35 - segunda e terça)"
+                  value={horario}
+                  onChangeText={setHorario}
+                />
+
+                <TouchableOpacity style={estilos.botao} onPress={adicionarHorario}>
+                  <Text style={estilos.texto_botao}>Adicionar Horário</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity style={estilos.botaoCadastroProf} onPress={IrParaCadastroProfessor}>
+                <Text style={estilos.textoBotaoCadastroProf}>Cadastrar Professor</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-        
       </ScrollView>
-
-      {/* Botão flutuante para redirecionar ao Cadastro de Professores */}
-      
     </View>
   );
 }
