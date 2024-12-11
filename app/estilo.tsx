@@ -304,7 +304,7 @@ const estilos = StyleSheet.create({
       alignSelf: 'center',
    },
    horarioTexto: {
-      fontSize: 16,
+      fontSize: 16, 
       color: '#333',
       fontWeight: 'bold',
       marginBottom: 2,
@@ -378,6 +378,21 @@ iconview: {
    fontSize: 40,
    fontWeight: '500',
    marginBottom: 45
+},
+textoAvisoshorarios:{
+   fontSize: 18,
+   color: '#333',
+   textAlign:'center'
+},
+imagemIconeavisos:{
+   width: 45,
+      height: 40,
+      resizeMode: 'contain',
+},
+titulohorarios: {
+   fontSize: 26,
+   fontWeight: 'bold',
+   color: '#075070',
 },
 });
 

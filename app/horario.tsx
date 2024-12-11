@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, StatusBar, Text, View, Alert } from "react-native";
+import { Image, StatusBar, Text, View, Alert,ScrollView } from "react-native";
 import estilos from "./estilo";
 import { database } from "./db"; // Importa a instância do Firebase Database
 import { ref, get } from "firebase/database"; // Função para obter dados do Firebase
@@ -54,6 +54,7 @@ export default function Horario() {
   }, []);
 
   return (
+    <ScrollView style={estilos.scrollCalendario}>
     <View style={estilos.body}>
       <StatusBar barStyle="light-content" backgroundColor="#075070" />
 
@@ -65,54 +66,87 @@ export default function Horario() {
           />
         </View>
       </View>
+      <View style={estilos.bottom}>
+          <View style={estilos.container_main__login}>
+            <View style={estilos.secaoSuperior}>
+              <View style={estilos.containermenu2}>
 
       {/* Título centralizado */}
       <View style={estilos.container_Calendario}>
-        <Text style={estilos.tituloAvisos}>Horários</Text>
+        <Text style={estilos.titulohorarios}>Horários</Text>
 
         {/* Texto das atividades */}
         <View style={estilos.container_Calendario}>
           <Text style={estilos.horarioTexto}>Ballet</Text>
+          <Image
+                  style={estilos.imagemIconeavisos}
+                  source={require("../assets/images/balletlogo.png")}
+                />
           <View style={estilos.caixaAvisos}>
-            <Text style={estilos.textoAvisos}>{horarios['ballet'] || "Aqui vai o horário para Ballet"}</Text>
+            <Text style={estilos.textoAvisoshorarios}>{horarios['ballet'] || "Aqui vai o horário para Ballet"}</Text>
           </View>
         </View>
 
         <View style={estilos.container_Calendario}>
           <Text style={estilos.horarioTexto}>Basquete</Text>
+          <Image
+                  style={estilos.imagemIconeavisos}
+                  source={require("../assets/images/basquetelogo.png")}
+                />
           <View style={estilos.caixaAvisos}>
-            <Text style={estilos.textoAvisos}>{horarios['basquete'] || "Aqui vai o horário para Basquete"}</Text>
+            <Text style={estilos.textoAvisoshorarios}>{horarios['basquete'] || "Aqui vai o horário para Basquete"}</Text>
           </View>
         </View>
 
         <View style={estilos.container_Calendario}>
           <Text style={estilos.horarioTexto}>Judô</Text>
+          <Image
+                  style={estilos.imagemIconeavisos}
+                  source={require("../assets/images/judologo.png")}
+                />
           <View style={estilos.caixaAvisos}>
-            <Text style={estilos.textoAvisos}>{horarios['judô'] || "Aqui vai o horário para Judô"}</Text>
+            <Text style={estilos.textoAvisoshorarios}>{horarios['judô'] || "Aqui vai o horário para Judô"}</Text>
           </View>
         </View>
 
-        <View style={estilos.container_Calendario}>
+        <View style={estilos.container_Calendario}> 
           <Text style={estilos.horarioTexto}>Futsal</Text>
+          <Image
+                  style={estilos.imagemIconeavisos}
+                  source={require("../assets/images/futsallogo.png")}
+                />
           <View style={estilos.caixaAvisos}>
-            <Text style={estilos.textoAvisos}>{horarios['futsal'] || "Aqui vai o horário para Futsal"}</Text>
+            <Text style={estilos.textoAvisoshorarios}>{horarios['futsal'] || "Aqui vai o horário para Futsal"}</Text>
           </View>
         </View>
 
         <View style={estilos.container_Calendario}>
           <Text style={estilos.horarioTexto}>Natação</Text>
+          <Image
+                  style={estilos.imagemIconeavisos}
+                  source={require("../assets/images/natacaologo.png")}
+                />
           <View style={estilos.caixaAvisos}>
-            <Text style={estilos.textoAvisos}>{horarios['natação'] || "Aqui vai o horário para Natação"}</Text>
+            <Text style={estilos.textoAvisoshorarios}>{horarios['natação'] || "Aqui vai o horário para Natação"}</Text>
           </View>
         </View>
 
         <View style={estilos.container_Calendario}>
           <Text style={estilos.horarioTexto}>Vôlei</Text>
+          <Image
+                  style={estilos.imagemIconeavisos}
+                  source={require("../assets/images/voleilogo.png")}
+                />
           <View style={estilos.caixaAvisos}>
-            <Text style={estilos.textoAvisos}>{horarios['vôlei'] || "Aqui vai o horário para Vôlei"}</Text>
+            <Text style={estilos.textoAvisoshorarios}>{horarios['vôlei'] || "Aqui vai o horário para Vôlei"}</Text>
           </View>
         </View>
       </View>
     </View>
+    </View>
+          </View>
+        </View>
+      </View>
+    </ScrollView> 
   );
 }

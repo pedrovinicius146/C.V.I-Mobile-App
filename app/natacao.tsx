@@ -96,6 +96,6 @@ export default function Natacao() {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </ScrollView> 
   );
 }

@@ -73,8 +73,10 @@ export default function Index() {
                       onPress={() => rota.push("/redefinirsenha")} 
                     >
                       Clique Aqui
+
                     </Text>
                   </Text>
+                  <Link href={"/menu"}>menu</Link>
                 </View>
                 
 
@@ -87,7 +89,6 @@ export default function Index() {
                   onPress={IrParaCadastro}
                 >
                   <Text style={estilos.textoBotaoCadastro}>Ir para Cadastro</Text>
-
               
                 </TouchableOpacity>
               </View>
